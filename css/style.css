@@ -1,0 +1,349 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400&display=swap');
+
+/* ─── Reset ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, div, span, h1, h2, h3, p, a, img, section, header, nav, figure { margin: 0; padding: 0; border: 0; }
+article, aside, figure, footer, header, nav, section { display: block; }
+
+/* ─── Custom Properties ──────────────────────── */
+:root {
+  --navy:      #0a1628;
+  --navy-mid:  #0d2040;
+  --ocean:     #0e3d5c;
+  --gold:      #c8a96e;
+  --cream:     #f5f0e8;
+  --white:     #ffffff;
+  --white-60:  rgba(255,255,255,0.6);
+  --white-20:  rgba(255,255,255,0.2);
+  --pad:       3vw;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:  'Inter', system-ui, sans-serif;
+}
+
+/* ─── Base ───────────────────────────────────── */
+html {
+  font-size: 11px;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  background-color: var(--navy);
+  color: var(--white);
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--white-60);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover { color: var(--white); }
+
+/* ─── Header / Frame ─────────────────────────── */
+.frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+
+.frame__brand {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  color: var(--white);
+  pointer-events: auto;
+}
+
+.frame__nav {
+  display: flex;
+  gap: 2.4rem;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  pointer-events: auto;
+}
+
+/* ─── Intro Spacer ───────────────────────────── */
+.spacer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  padding: 0 var(--pad);
+}
+
+.spacer--intro {
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 6vw;
+  /* ── Troque o caminho abaixo pela sua imagem ── */
+  background-image: url('../img/intro-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Overlay escuro sobre a imagem de fundo para o texto ficar legível */
+.spacer--intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 22, 40, 0.55) 0%,
+    rgba(10, 22, 40, 0.25) 50%,
+    rgba(10, 22, 40, 0.65) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.spacer--intro > * {
+  position: relative;
+  z-index: 1;
+}
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.intro-label {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.intro-title {
+  font-family: var(--font-serif);
+  font-size: clamp(5rem, 9vw, 14rem);
+  font-weight: 300;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 3.6rem;
+}
+
+.intro-title span {
+  display: block;
+  font-style: italic;
+  opacity: 0.65;
+  font-size: 0.75em;
+}
+
+.intro-btn {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white) !important;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  padding: 1em 2.2em;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.intro-btn:hover {
+  border-color: var(--white);
+  color: var(--white) !important;
+}
+
+/* ─── End Spacer ─────────────────────────────── */
+.spacer--end {
+  background: linear-gradient(to bottom, var(--navy), var(--navy-mid));
+  gap: 2.4rem;
+}
+
+.end-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.end-content h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4vw, 6rem);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--white);
+}
+
+.cta-btn {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--navy) !important;
+  background: var(--gold);
+  padding: 1.2em 3em;
+  border-radius: 2px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.cta-btn:hover {
+  background: var(--cream);
+  transform: translateY(-2px);
+}
+
+/* ─── Vídeo (camada base do stage) ──────────── */
+.video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+/* ─── Stage (sticky scroll area) ────────────── */
+.stage {
+  height: 500vh;
+  position: relative;
+}
+
+.layers {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.layer image {
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Text Overlays ──────────────────────────── */
+.texts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.txt {
+  position: absolute;
+  inset: 0;
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 10vh;
+  clip-path: inset(100% 0 0 0);
+  transform: translateY(40px);
+}
+
+.txt__card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: rgba(8, 24, 48, 0.904);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-left: 2px solid var(--gold);
+  padding: 2.8rem 3.2rem 2.8rem 2.8rem;
+  transform: translateX(-80px);
+  max-width: 52ch;
+}
+
+.txt__label {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+}
+
+.txt__title {
+  font-family: var(--font-serif);
+  font-size: clamp(5rem, 7vw, 13rem);
+  font-weight: 300;
+  line-height: 0.87;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  text-transform: uppercase;
+  margin-bottom: 2.4rem;
+}
+
+.txt__desc {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 0.9vw, 1.4rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--white-60);
+  max-width: 36ch;
+}
+
+/* ─── Progress Bar ───────────────────────────── */
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 3rem var(--pad);
+  display: flex;
+  gap: 0.8rem;
+  z-index: 20;
+}
+
+.segment {
+  flex: 1;
+  height: 1px;
+  background: var(--white-20);
+  overflow: hidden;
+  position: relative;
+}
+
+.fill {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0%;
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.05s linear;
+}
+
+/* ─── Responsive ─────────────────────────────── */
+@media screen and (max-width: 768px) {
+  .frame__nav { display: none; }
+
+  .txt__title {
+    font-size: clamp(4rem, 12vw, 7rem);
+  }
+
+  .txt__desc { max-width: 100%; width: 90%; }
+}

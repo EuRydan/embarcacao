@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Náutica Azul — Embarcações Premium</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="frame">
+    <div class="frame__brand">NÁUTICA AZUL</div>
+    <nav class="frame__nav">
+      <a href="#frota">Nossa Frota</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <div class="spacer spacer--intro">
+    <div class="intro-content">
+      <p class="intro-label">Desbrave o horizonte</p>
+      <h1 class="intro-title">Embarcações<br><span>de Alto Mar</span></h1>
+      <a class="intro-btn" href="#frota">Ver Coleção →</a>
+    </div>
+  </div>
+
+  <section class="stage" id="frota">
+    <div class="layers">
+
+      <!-- Vídeo — camada base (abaixo das SVGs) -->
+      <video class="video-bg" autoplay muted loop playsinline preload="auto">
+        <source src="public/12270865-uhd_3840_2160_30fps.mp4" type="video/mp4">
+      </video>
+
+      <!-- Imagem 1 — Porto -->
+      <svg class="layer" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+          <mask id="mask1" maskUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="100" height="100" fill="black"/>
+            <g id="blinds1"></g>
+          </mask>
+        </defs>
+        <image href="img/2.webp" x="0" y="0" width="100" height="100"
+               preserveAspectRatio="xMidYMid slice" mask="url(#mask1)"/>
+      </svg>
+
+      <!-- Imagem 2 — Alto Mar -->
+      <svg class="layer" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+          <mask id="mask2" maskUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="100" height="100" fill="black"/>
+            <g id="blinds2"></g>
+          </mask>
+        </defs>
+        <image href="img/1.webp" x="0" y="0" width="100" height="100"
+               preserveAspectRatio="xMidYMid slice" mask="url(#mask2)"/>
+      </svg>
+
+      <!-- Imagem 3 — Pôr do Sol -->
+      <svg class="layer" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+          <mask id="mask3" maskUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="100" height="100" fill="black"/>
+            <g id="blinds3"></g>
+          </mask>
+        </defs>
+        <image href="img/3.webp" x="0" y="0" width="100" height="100"
+               preserveAspectRatio="xMidYMid slice" mask="url(#mask3)"/>
+      </svg>
+
+      <!-- Barra de progresso -->
+      <div class="progress-bar">
+        <div class="segment"><div class="fill"></div></div>
+        <div class="segment"><div class="fill"></div></div>
+        <div class="segment"><div class="fill"></div></div>
+      </div>
+
+      <!-- Textos por seção -->
+      <div class="texts">
+        <div class="txt txt--1">
+          <div class="txt__card">
+            <span class="txt__label">01 — Porto</span>
+            <h2 class="txt__title">HARBOR<br>COLLECTION</h2>
+            <p class="txt__desc">Embarcações premium para travessias costeiras. Design aerodinâmico e conforto incomparável para cada saída ao mar.</p>
+          </div>
+        </div>
+        <div class="txt txt--2">
+          <div class="txt__card">
+            <span class="txt__label">02 — Alto Mar</span>
+            <h2 class="txt__title">OPEN<br>OCEAN</h2>
+            <p class="txt__desc">Lancha de alto desempenho para expedições offshore. Motor de 400 HP e casco reforçado para ondas de até 3 metros.</p>
+          </div>
+        </div>
+        <div class="txt txt--3">
+          <div class="txt__card">
+            <span class="txt__label">03 — Luxo</span>
+            <h2 class="txt__title">SUNSET<br>VOYAGE</h2>
+            <p class="txt__desc">Iate executivo para eventos e lazer exclusivo. Deck espaçoso, cabines climatizadas e acabamento em madeira nobre.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="spacer spacer--end" id="servicos">
+    <div class="end-content">
+      <p class="intro-label">Nossos Serviços</p>
+      <h2>Manutenção · Locação · Venda</h2>
+      <a class="cta-btn" href="#contato">Fale Conosco</a>
+    </div>
+  </div>
+
+  <script src="js/gsap.min.js"></script>
+  <script src="js/ScrollTrigger.min.js"></script>
+  <script src="js/lenis.min.js"></script>
+  <script src="js/script.js" defer></script>
+</body>
+</html>
