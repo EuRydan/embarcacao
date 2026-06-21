@@ -106,8 +106,8 @@ function createBlinds(groupId) {
   return blinds;
 }
 
-/* ── Recalcula viewBox e rebuilda blinds para todos os layers ── */
-function updateLayout() {
+/* ── Recalcula viewBox e rebuilda blinds (compartilhado desktop/mobile) ── */
+function setupLayout() {
   const width    = window.innerWidth;
   const height   = window.innerHeight;
   const vbWidth  = 100;
@@ -131,12 +131,89 @@ function updateLayout() {
       img.setAttribute('height', vbHeight);
     }
 
-    const gEl   = svg.querySelector('g[id^="blinds"]');
+    const gEl    = svg.querySelector('g[id^="blinds"]');
     const blinds = createBlinds(gEl.id);
     if (blinds) blindsSets.push(blinds);
   });
+}
 
-  buildMasterTimeline();
+function updateLayout() {
+  setupLayout();
+  if (!isTouch) buildMasterTimeline();
+}
+
+/* ── Slideshow automático para mobile ────────────────────────── */
+let _slideshowTimer = null;
+
+function runMobileSlideshow() {
+  if (_slideshowTimer) { clearInterval(_slideshowTimer); _slideshowTimer = null; }
+
+  const imgLayers = Array.from(document.querySelectorAll('.layer')); // as 3 SVG layers (video tem classe video-bg)
+  const texts     = gsap.utils.toArray('.txt');
+  const fills     = gsap.utils.toArray('.progress-bar .fill');
+  const DURATION  = 4000; // ms por slide
+  let cur = -1;
+
+  /* Abre os blinds do layer idx instantaneamente (sem animação) */
+  function openBlindsInstant(idx) {
+    const bs = blindsSets[idx];
+    if (!bs) return;
+    bs.forEach((b) => {
+      b.top.setAttribute('height', b.h + 0.01);
+      b.top.setAttribute('y',      b.y - b.h);
+      b.bottom.setAttribute('height', b.h + 0.01);
+    });
+  }
+
+  function showSlide(idx) {
+    const prev = cur;
+    cur = idx;
+
+    /* Sai o slide anterior */
+    if (prev >= 0) {
+      gsap.to(imgLayers[prev] || {}, { opacity: 0, duration: 0.55, ease: 'power2.inOut' });
+      if (texts[prev]) {
+        gsap.to(texts[prev], { clipPath: 'inset(0% 0% 100% 0%)', y: -20, duration: 0.45, ease: 'power2.in' });
+        const c = texts[prev].querySelector('.txt__card');
+        if (c) gsap.to(c, { x: -60, duration: 0.35, ease: 'power2.in' });
+      }
+    }
+
+    /* Abre blinds do slide atual (instantâneo) e faz fade-in da imagem */
+    openBlindsInstant(idx);
+    gsap.fromTo(imgLayers[idx] || {}, { opacity: 0 },
+      { opacity: 1, duration: 0.7, ease: 'power2.out', delay: prev < 0 ? 0.05 : 0.25 });
+
+    /* Entra o texto */
+    if (texts[idx]) {
+      const delay = prev < 0 ? 0.15 : 0.4;
+      gsap.fromTo(texts[idx],
+        { clipPath: 'inset(100% 0% 0% 0%)', y: 40 },
+        { clipPath: 'inset(0% 0% 0% 0%)', y: 0, duration: 0.9, ease: 'expo.out', delay });
+      const c = texts[idx].querySelector('.txt__card');
+      if (c) gsap.fromTo(c, { x: -80 }, { x: 0, duration: 0.9, ease: 'expo.out', delay: delay + 0.1 });
+    }
+
+    /* Progresso */
+    fills.forEach((fill, i) => {
+      if (i === idx) {
+        gsap.fromTo(fill, { width: '0%' }, { width: '100%', duration: DURATION / 1000, ease: 'none' });
+      } else {
+        gsap.set(fill, { width: i < idx ? '100%' : '0%' });
+      }
+    });
+  }
+
+  /* Estado inicial */
+  gsap.set(imgLayers, { opacity: 0 });
+  texts.forEach((t) => {
+    gsap.set(t, { clipPath: 'inset(100% 0% 0% 0%)', y: 40 });
+    const c = t.querySelector('.txt__card');
+    if (c) gsap.set(c, { x: -80 });
+  });
+
+  showSlide(0);
+  _slideshowTimer = setInterval(() => showSlide((cur + 1) % imgLayers.length), DURATION);
 }
 
 /* ── Animação: abre os blinds de uma layer ───────────────────── */
@@ -253,12 +330,19 @@ function initProgressBar() {
 
 /* ── Inicialização ───────────────────────────────────────────── */
 updateLayout();
-initProgressBar();
+if (isTouch) {
+  runMobileSlideshow();
+} else {
+  initProgressBar();
+}
 
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(updateLayout, 250);
+  resizeTimer = setTimeout(() => {
+    updateLayout();
+    if (isTouch) runMobileSlideshow();
+  }, 250);
 });
 
 /* ── Mobile Menu ─────────────────────────────────────────────── */

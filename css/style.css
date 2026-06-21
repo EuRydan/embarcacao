@@ -284,6 +284,7 @@ a:hover { color: var(--white); }
   border-left: 2px solid var(--gold);
   padding: 2.8rem 3.2rem 2.8rem 2.8rem;
   transform: translateX(-80px);
+  will-change: transform, opacity;
   max-width: 52ch;
 }
 
@@ -1648,6 +1649,9 @@ a:hover { color: var(--white); }
   /* Base */
   html  { font-size: 14px; }
   :root { --pad: 5vw; }
+
+  /* Stage: no mobile vira slideshow fixo (altura = 1 viewport) */
+  .stage { height: 100vh; }
 
   /* ── Frame ───────────────────────────────────── */
   .frame__nav { display: none; }
