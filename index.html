@@ -9,19 +9,48 @@
 <body>
 
   <header class="frame">
-    <div class="frame__brand">NÁUTICA AZUL</div>
+    <img class="frame__logo" src="img/logo.png" alt="Yacht Collection">
     <nav class="frame__nav">
-      <a href="#frota">Nossa Frota</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#contato">Contato</a>
+      <a href="#a-empresa">A EMPRESA</a>
+      <a href="#seminovos">SEMINOVOS</a>
+      <a href="#TIRRENO MARINE">TIRRENO MARINE</a>
+      <a href="https://inacesuperyachts.com/" target="_blank" rel="noopener">INACE SUPERYACHTS</a>
+      <a href="#ag-catamaran">AG CATAMARAN</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown__toggle" aria-expanded="false">
+          CHARTER INTERNACIONAL <span class="nav-dropdown__arrow">▾</span>
+        </button>
+        <ul class="nav-dropdown__menu">
+          <li><a href="#charter-caribe">CHARTER CARIBE</a></li>
+          <li><a href="#charter-europa">CHARTER EUROPA</a></li>
+        </ul>
+      </div>
+      <a href="#CONTATO">CONTATO</a>
     </nav>
+    <button class="hamburger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
+
+  <div class="mobile-menu" aria-hidden="true">
+    <button class="mobile-menu__close" aria-label="Fechar menu">✕</button>
+    <nav class="mobile-menu__nav">
+      <a href="#a-empresa">A EMPRESA</a>
+      <a href="#seminovos">SEMINOVOS</a>
+      <a href="#TIRRENO MARINE">TIRRENO MARINE</a>
+      <a href="https://inacesuperyachts.com/" target="_blank" rel="noopener">INACE SUPERYACHTS</a>
+      <a href="#ag-catamaran">AG CATAMARAN</a>
+      <a href="#charter-caribe">CHARTER CARIBE</a>
+      <a href="#charter-europa">CHARTER EUROPA</a>
+      <a href="#CONTATO">CONTATO</a>
+    </nav>
+  </div>
 
   <div class="spacer spacer--intro">
     <div class="intro-content">
       <p class="intro-label">Desbrave o horizonte</p>
       <h1 class="intro-title">Embarcações<br><span>de Alto Mar</span></h1>
-      <a class="intro-btn" href="#frota">Ver Coleção →</a>
+      <a class="intro-btn" href="#frota">SAIBA MAIS →</a>
     </div>
   </div>
 
@@ -104,13 +133,392 @@
     </div>
   </section>
 
-  <div class="spacer spacer--end" id="servicos">
-    <div class="end-content">
-      <p class="intro-label">Nossos Serviços</p>
-      <h2>Manutenção · Locação · Venda</h2>
-      <a class="cta-btn" href="#contato">Fale Conosco</a>
+  <section class="section-white" id="a-empresa">
+
+    <div class="empresa-hero">
+      <p class="empresa-eyebrow">YACHT COLLECTION</p>
+      <h2 class="empresa-title">Navegar é um<br><em>estilo de vida</em></h2>
     </div>
-  </div>
+
+    <div class="empresa-body">
+
+      <div class="empresa-intro">
+        <h3 class="empresa-subtitle">Exclusividade em cada detalhe</h3>
+        <p>Expandindo horizontes, elevando experiências. A Yacht Collection é referência no mercado náutico, oferecendo um portfólio completo para quem busca exclusividade e sofisticação no mar.</p>
+        <p>Com mais de 30 anos de expertise, atuamos na compra e venda de barcos seminovos das marcas mais prestigiadas, garantindo um atendimento personalizado do primeiro contato ao pós-venda. Nossa equipe altamente qualificada e estrutura de atendimento de alto padrão fazem da Yacht Collection o principal yacht broker do Brasil.</p>
+        <p>Além disso, somos representante oficial da AG Catamaran, oferecendo embarcações sob medida para os mais exigentes navegadores.</p>
+        <p>Para quem deseja viver momentos inesquecíveis a bordo, disponibilizamos serviços de Yacht Charter Nacional e Internacional, proporcionando experiências personalizadas nos destinos mais exclusivos do mundo.</p>
+        <p class="empresa-closing">Yacht Collection. Excelência, exclusividade e expertise para você navegar com total confiança.</p>
+      </div>
+
+      <div class="empresa-pillars">
+        <div class="pilar">
+          <h4 class="pilar__title">Missão</h4>
+          <p class="pilar__text">A missão da Yacht Collection pode parecer um paradoxo, pois consiste em tratar com absoluto respeito, profissionalismo, técnica e organização, algo tão subjetivo e intangível como é o sonho dos nossos clientes. Isso é: procuramos tratar o processo da compra, venda e pós-venda de um iate, de forma que jamais permita que o lado racional e necessário de um negócio desfaça o encanto e a realização do sonho.</p>
+        </div>
+        <div class="pilar">
+          <h4 class="pilar__title">Visão</h4>
+          <p class="pilar__text">Nossa visão consiste em oferecer um serviço de excelência aos nossos clientes, por meio da comercialização de embarcações novas e semi-novas das principais e mais respeitadas marcas globais no mercado náutico.</p>
+        </div>
+        <div class="pilar">
+          <h4 class="pilar__title">Valores</h4>
+          <p class="pilar__text">Nossos valores incluem a satisfação do cliente como prioridade, além da prática ética, integridade, comprometimento e busca contínua pela melhoria.</p>
+        </div>
+        <div class="pilar">
+          <h4 class="pilar__title">Objetivo</h4>
+          <p class="pilar__text">Nossa visão consiste em oferecer um serviço de excelência aos nossos clientes, por meio da comercialização de embarcações novas e semi-novas das principais e mais respeitadas marcas globais no mercado náutico.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section-seminovos" id="seminovos">
+    <div class="seminovos-card">
+      <h2 class="seminovos-card__title">ENCONTRE SEU BARCO HOJE!</h2>
+      <div class="seminovos-filters">
+
+        <div class="filter-group">
+          <label class="filter-label">Fabricante</label>
+          <select class="filter-select" id="filter-brand">
+            <option value="">TODOS OS FABRICANTES</option>
+            <option value="AG CATAMARAN">AG CATAMARAN</option>
+            <option value="ATLANTIS">ATLANTIS</option>
+            <option value="AZIMUT">AZIMUT</option>
+            <option value="CARBRASMAR">CARBRASMAR</option>
+            <option value="FERRETTI">FERRETTI</option>
+            <option value="GENESIS">GENESIS</option>
+            <option value="GLOBAL">GLOBAL</option>
+            <option value="INTERMARINE">INTERMARINE</option>
+            <option value="ISY">ISY</option>
+            <option value="MAGNUM">MAGNUM</option>
+            <option value="REAL">REAL</option>
+            <option value="SCHAEFER YACHTS">SCHAEFER YACHTS</option>
+            <option value="SEGUE">SEGUE</option>
+          </select>
+        </div>
+
+        <div class="filter-group filter-group--grow">
+          <label class="filter-label">Modelo / Ano / Descrição</label>
+          <input class="filter-input" id="filter-text" type="text" placeholder="MODELO / ANO / DESCRIÇÃO">
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Pés</label>
+          <select class="filter-select" id="filter-feet">
+            <option value="">TODOS OS TAMANHOS</option>
+            <option value="106">MAIOR QUE 106</option>
+            <option value="90">MAIOR QUE 90</option>
+            <option value="83">MAIOR QUE 83</option>
+            <option value="77">MAIOR QUE 77</option>
+            <option value="74">MAIOR QUE 74</option>
+            <option value="72">MAIOR QUE 72</option>
+            <option value="70">MAIOR QUE 70</option>
+            <option value="68">MAIOR QUE 68</option>
+            <option value="62">MAIOR QUE 62</option>
+            <option value="60">MAIOR QUE 60</option>
+            <option value="56">MAIOR QUE 56</option>
+            <option value="54">MAIOR QUE 54</option>
+            <option value="52">MAIOR QUE 52</option>
+            <option value="51">MAIOR QUE 51</option>
+            <option value="50">MAIOR QUE 50</option>
+            <option value="48">MAIOR QUE 48</option>
+            <option value="46">MAIOR QUE 46</option>
+            <option value="44">MAIOR QUE 44</option>
+            <option value="42">MAIOR QUE 42</option>
+            <option value="41">MAIOR QUE 41</option>
+            <option value="39">MAIOR QUE 39</option>
+            <option value="38">MAIOR QUE 38</option>
+          </select>
+        </div>
+
+        <div class="filter-group filter-group--ref">
+          <label class="filter-label">Ref</label>
+          <input class="filter-input filter-input--number" id="filter-ref" type="number" placeholder="REF" min="0">
+        </div>
+
+        <button class="filter-search" id="filter-btn" aria-label="Pesquisar">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="seminovos-results" id="seminovos-results"></div>
+  </section>
+
+  <section class="section-ag" id="ag-catamaran">
+
+    <div class="ag-hero">
+      <p class="ag-eyebrow">AG CATAMARAN</p>
+      <h2 class="ag-title">O Power Cat<br><em>AG 54</em></h2>
+      <p class="ag-lead">Uma obra-prima de design naval, combinando elegância e inovação em cada detalhe. Com 198 m² de área total — equivalente a um monocasco de 70 pés — e a estabilidade característica dos catamarãs.</p>
+    </div>
+
+    <div class="ag-gallery">
+      <img class="ag-gallery__banner" src="https://agcatamarans.com/assets/exterior.png"    alt="Power Cat AG 54 — Exterior">
+      <div class="ag-gallery__row">
+        <img src="https://agcatamarans.com/assets/proa.JPG"        alt="Proa">
+        <img src="https://agcatamarans.com/assets/pops54.jpg"      alt="Popa">
+        <img src="https://agcatamarans.com/assets/salon.png"       alt="Salão">
+        <img src="https://agcatamarans.com/assets/suitemaster.png" alt="Suíte Master">
+      </div>
+    </div>
+
+    <div class="ag-body">
+
+      <div class="ag-features">
+        <h3 class="ag-section-label">Características</h3>
+        <ul class="ag-list">
+          <li>Beach club integrado</li>
+          <li>Flybridge espaçoso</li>
+          <li>Solário na proa</li>
+          <li>2 dependências para tripulação</li>
+          <li>Salão principal integrado à praça de popa</li>
+          <li>Interior banhado por luz natural</li>
+        </ul>
+      </div>
+
+      <div class="ag-specs">
+        <h3 class="ag-section-label">Especificações Técnicas</h3>
+        <dl class="ag-table">
+          <div class="ag-row"><dt>Comprimento Total</dt><dd>54 pés / 15,53 m</dd></div>
+          <div class="ag-row"><dt>Boca (largura)</dt><dd>7,25 m</dd></div>
+          <div class="ag-row"><dt>Calado aproximado</dt><dd>1,10 m</dd></div>
+          <div class="ag-row"><dt>Capacidade diária</dt><dd>20 pessoas</dd></div>
+          <div class="ag-row"><dt>Configuração de cabines</dt><dd>3 ou 4 suítes</dd></div>
+          <div class="ag-row"><dt>Motorização padrão</dt><dd>Yanmar 6LPA 315 HP</dd></div>
+          <div class="ag-row"><dt>Motorização opcional</dt><dd>Volvo D6 440 HP</dd></div>
+          <div class="ag-row"><dt>Combustível</dt><dd>2 × 925 litros</dd></div>
+          <div class="ag-row"><dt>Água</dt><dd>2 × 500 litros</dd></div>
+          <div class="ag-row"><dt>Construção</dt><dd>Compósitos em fibra de vidro</dd></div>
+          <div class="ag-row"><dt>Ano de construção</dt><dd>2025</dd></div>
+          <div class="ag-row"><dt>País de origem</dt><dd>Brasil</dd></div>
+        </dl>
+      </div>
+
+      <div class="ag-about">
+        <h3 class="ag-section-label">Sobre a AG Catamaran</h3>
+        <p>Construtor naval fundado em 1979, com mais de 600 embarcações entregues. Especializado em veleiros de 36 pés e catamarãs até 62 pés, a AG Catamaran é referência em qualidade e inovação náutica no Brasil.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section-newsletter" id="newsletter">
+    <div class="newsletter-inner">
+      <p class="newsletter-label">Receba nossa newsletter</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input class="newsletter-input" type="email" placeholder="E-mail" aria-label="E-mail">
+        <button class="newsletter-btn" type="submit">ENVIAR</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section-charter-caribe" id="charter-caribe">
+
+    <div class="cc-banner">
+      <img class="cc-banner__img" src="https://yachtcollection.com.br/img/charter/internacional/Banner-Charte-Desktop-V2.svg" alt="Charter Caribe">
+      <div class="cc-banner__overlay">
+        <p class="cc-eyebrow">Charter Internacional</p>
+        <h2 class="cc-title">Experimente o Caribe<br><em>em grande estilo</em></h2>
+        <a class="cc-cta" href="mailto:charter@charteryc.com.br">Solicitar Orçamento</a>
+      </div>
+    </div>
+
+    <div class="cc-body">
+
+      <div class="cc-intro">
+        <p>Navegue pelos destinos mais exclusivos do Caribe a bordo de embarcações de alto padrão. Nossa equipe especializada cuida de cada detalhe para que sua experiência seja verdadeiramente inesquecível.</p>
+        <div class="cc-contact">
+          <div class="cc-contact-item">
+            <span class="cc-contact-label">Charter</span>
+            <a href="tel:+5521991346756">+55 (21) 99134-6756</a>
+            <a href="mailto:charter@charteryc.com.br">charter@charteryc.com.br</a>
+          </div>
+          <a class="cc-whatsapp" href="https://wa.me/5521991346756" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="cc-yachts">
+        <h3 class="cc-yachts-title">Embarcações Disponíveis</h3>
+        <ul class="cc-yachts-grid">
+          <li>Angel Eyes<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/ANGELEYES.svg" alt="Angel Eyes"></li>
+          <li>Sol<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/SOL.svg" alt="Sol"></li>
+          <li>E-Supercat<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/E-SUPERCAT.svg" alt="E-Supercat"></li>
+          <li>Halcyon<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/HALCYON.svg" alt="Halcyon"></li>
+          <li>Temptation<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/TEMPTATION.svg" alt="Temptation"></li>
+          <li>Vivace<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/VIVACE.svg" alt="Vivace"></li>
+          <li>Crossed Sabre<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/CROSSED-SABRE.svg" alt="Crossed Sabre"></li>
+          <li>Exit Strategy<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/EXIT-STRATEGY-2.svg" alt="Exit Strategy"></li>
+          <li>Artemis<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/ARTEMIS.svg" alt="Artemis"></li>
+          <li>Sorana II<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/SORANA-II.svg" alt="Sorana II"></li>
+          <li>Omakase<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/OMAKASE.svg" alt="Omakase"></li>
+          <li>Eden<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/EDEN.svg" alt="Eden"></li>
+          <li>Arthur's Way<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/ARTHUR-S-WAY-V2.svg" alt="Arthur's Way"></li>
+          <li>Frenchwest<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/FRENCHWEST-V2.svg" alt="Frenchwest"></li>
+          <li>Seaglass<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/SEAGLASS-V3.svg" alt="Seaglass"></li>
+          <li>Mariah Princess III<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/MARIAH-PRINCESS-III.svg" alt="Mariah Princess III"></li>
+          <li>Accidental Success II<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/ACCIDENTAL-SUCCESS-II.svg" alt="Accidental Success II"></li>
+          <li>Patience<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/PATIENCE-V2.svg" alt="Patience"></li>
+          <li>Relentless<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/RELENTLESS.svg" alt="Relentless"></li>
+          <li>Maria Therese<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/MARIA-THERESE.svg" alt="Maria Therese"></li>
+          <li>Le Reve L620 Essence<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/internacional/LE-REVE-L620-ESSENCE.svg" alt="Le Reve L620 Essence"></li>
+        </ul>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section-charter-europa" id="charter-europa">
+
+    <div class="ce-banner">
+      <img class="ce-banner__img" src="https://yachtcollection.com.br/img/charter/europa/Banner-Charter-Europa-D.svg" alt="Charter Europa">
+      <div class="ce-banner__overlay">
+        <p class="ce-eyebrow">Charter Internacional</p>
+        <h2 class="ce-title">Europa com charme<br><em>e sofisticação</em></h2>
+        <a class="cc-cta" href="mailto:charter@charteryc.com.br">Solicitar Orçamento</a>
+      </div>
+    </div>
+
+    <div class="ce-body">
+
+      <div class="ce-yachts">
+        <h3 class="cc-yachts-title">Embarcações Disponíveis</h3>
+        <ul class="ce-yachts-grid">
+        <li>Duchess<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/DUCHESS.svg" alt="Duchess"></li>
+        <li>White Knight<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/WHITE-KNIGHT.svg" alt="White Knight"></li>
+        <li>Project Steel<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/PROJECT-STEEL.svg" alt="Project Steel"></li>
+        <li>My Karat II<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/MY-KARAT-II.svg" alt="My Karat II"></li>
+        <li>Christal Mio<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/CHRISTAL-MIO.svg" alt="Christal Mio"></li>
+        <li>Sea Lady II<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/SEA-LADY-II.svg" alt="Sea Lady II"></li>
+        <li>Love Story<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/LOVE-STORY.svg" alt="Love Story"></li>
+        <li>Blade 6<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/BLADE-6.svg" alt="Blade 6"></li>
+        <li>My Toy<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/MY-TOY.svg" alt="My Toy"></li>
+        <li>Pathos<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/PATHOS.svg" alt="Pathos"></li>
+        <li>Sasta<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/SASTA.svg" alt="Sasta"></li>
+        <li>Dawn<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/DAWN.svg" alt="Dawn"></li>
+        <li>Manu<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/MANU.svg" alt="Manu"></li>
+        <li>Ygo<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/YGO.svg" alt="Ygo"></li>
+        <li>Sanjana<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/SANJANA.svg" alt="Sanjana"></li>
+        <li>Meli<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/MELI.svg" alt="Meli"></li>
+        <li>Lazy Days<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/LAZY-DAYS.svg" alt="Lazy Days"></li>
+        <li>Silent Grace<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/SILENT-GRACE.svg" alt="Silent Grace"></li>
+        <li>Solomar<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/SOLOMAR.svg" alt="Solomar"></li>
+        <li>Elentari<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/ELENTARI.svg" alt="Elentari"></li>
+        <li>Blue Shark<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/BLUE-SHARK.svg" alt="Blue Shark"></li>
+        <li>Revival<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/REVIVAL.svg" alt="Revival"></li>
+        <li>Kimon<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/KIMON.svg" alt="Kimon"></li>
+        <li>King of Diamonds<img class="yacht-preview" src="https://yachtcollection.com.br/img/charter/europa/KING-OF-DIAMONDS.svg" alt="King of Diamonds"></li>
+      </ul>
+      </div>
+
+      <div class="cc-intro">
+        <p>Navegue pelos roteiros mais encantadores da Europa a bordo de embarcações de luxo. Do Mediterrâneo às costas da Croácia, cada destino é uma obra-prima.</p>
+        <div class="cc-contact">
+          <div class="cc-contact-item">
+            <span class="cc-contact-label">Charter</span>
+            <a href="tel:+5521991346756">+55 (21) 99134-6756</a>
+            <a href="mailto:charter@charteryc.com.br">charter@charteryc.com.br</a>
+          </div>
+          <a class="cc-whatsapp" href="https://wa.me/5521991346756" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section-contato" id="contato">
+
+    <div class="contato-header">
+      <p class="contato-eyebrow">Fale Conosco</p>
+      <h2 class="contato-title">Para falar com<br><em>a nossa equipe</em></h2>
+    </div>
+
+    <div class="contato-body">
+
+      <div class="contato-info">
+        <div class="contato-item">
+          <span class="contato-label">Charter</span>
+          <a href="tel:+5521991346756">+55 (21) 99134-6756</a>
+          <a href="mailto:charter@charteryc.com.br">charter@charteryc.com.br</a>
+        </div>
+        <div class="contato-item">
+          <span class="contato-label">Seminovos</span>
+          <a href="tel:+5521993890921">+55 (21) 99389-0921</a>
+          <a href="mailto:vip@yachtcollection.com.br">vip@yachtcollection.com.br</a>
+        </div>
+        <a class="contato-whatsapp" href="https://wa.me/5521993890921" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+
+      <form class="contato-form" onsubmit="return false;">
+        <div class="contato-form-row">
+          <div class="form-group">
+            <label class="form-label">Nome</label>
+            <input class="form-input" type="text" placeholder="Seu nome">
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <input class="form-input" type="email" placeholder="Seu e-mail">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assunto</label>
+          <select class="form-select">
+            <option value="">Selecione</option>
+            <option>Barcos</option>
+            <option>Assistência Técnica</option>
+            <option>Outros</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensagem</label>
+          <textarea class="form-textarea" rows="5" placeholder="Sua mensagem"></textarea>
+        </div>
+        <button class="form-submit" type="submit">ENVIAR MENSAGEM</button>
+      </form>
+
+    </div>
+
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <img class="footer-logo" src="img/logo.png" alt="Yacht Collection">
+      <nav class="footer-nav">
+        <a href="#a-empresa">A Empresa</a>
+        <a href="#seminovos">Seminovos</a>
+        <a href="#ag-catamaran">AG Catamaran</a>
+        <a href="#charter-caribe">Charter Caribe</a>
+        <a href="#charter-europa">Charter Europa</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="footer-social">
+        <a href="https://instagram.com/yachtcollection" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @yachtcollection
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Yacht Collection. Todos os direitos reservados.</span>
+    </div>
+  </footer>
 
   <script src="js/gsap.min.js"></script>
   <script src="js/ScrollTrigger.min.js"></script>

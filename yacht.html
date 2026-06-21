@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detalhe da Embarcação | Yacht Collection</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Reset / base ──────────────────────────── */
+    body { background: var(--navy); color: var(--white); }
+
+    /* ── Topbar ────────────────────────────────── */
+    .yd-topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      height: 68px;
+      display: flex; align-items: center; gap: 2rem; padding: 0 5vw;
+      background: rgba(6,14,28,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--white-10);
+    }
+    .yd-topbar__logo { height: clamp(22px,2.2vw,34px); width: auto; }
+    .yd-topbar__back {
+      margin-left: auto;
+      font-family: var(--font-sans); font-size: .8rem;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      display: flex; align-items: center; gap: .5rem;
+      transition: opacity .2s;
+    }
+    .yd-topbar__back:hover { opacity: .7; }
+
+    /* ── Page wrapper ──────────────────────────── */
+    .yd-page {
+      padding-top: 68px;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    /* ── TOP GRID: image + form ────────────────── */
+    .yd-top {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 0;
+      border-bottom: 1px solid var(--white-10);
+    }
+
+    /* Main image */
+    .yd-main-img-wrap {
+      position: relative;
+      background: #060e1c;
+      overflow: hidden;
+    }
+    #yd-main-img {
+      width: 100%; display: block;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      transition: opacity .35s ease;
+    }
+
+    /* Thumbnails strip */
+    .yd-thumbs {
+      display: flex; gap: 3px; overflow-x: auto;
+      scrollbar-width: thin; scrollbar-color: var(--gold) transparent;
+      padding: 3px;
+      background: #060e1c;
+      border-top: 1px solid var(--white-10);
+    }
+    .yd-thumb {
+      flex-shrink: 0; width: 100px; height: 66px;
+      object-fit: cover; cursor: pointer;
+      opacity: .45; transition: opacity .2s; display: block;
+    }
+    .yd-thumb.is-active, .yd-thumb:hover { opacity: 1; }
+
+    /* Contact form panel */
+    .yd-form-panel {
+      border-left: 1px solid var(--white-10);
+      background: rgba(255,255,255,0.03);
+      display: flex; flex-direction: column;
+    }
+    .yd-form-panel__head {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: var(--font-sans);
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      text-align: center;
+      padding: 1.1rem 1rem;
+    }
+    .yd-form-body { padding: 1.6rem 1.8rem 2rem; display: flex; flex-direction: column; gap: .9rem; }
+    .yd-input, .yd-select, .yd-textarea {
+      width: 100%; box-sizing: border-box;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--white);
+      font-family: var(--font-sans); font-size: 1rem;
+      padding: .85em 1em;
+      outline: none; appearance: none; -webkit-appearance: none;
+      transition: border-color .25s;
+    }
+    .yd-input::placeholder, .yd-textarea::placeholder { color: rgba(255,255,255,.35); }
+    .yd-input:focus, .yd-select:focus, .yd-textarea:focus { border-color: var(--gold); }
+    .yd-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8a96e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1em center;
+      padding-right: 2.6em; cursor: pointer;
+    }
+    .yd-select option { background: var(--navy); color: var(--white); }
+    .yd-textarea { resize: vertical; min-height: 100px; }
+    .yd-submit {
+      width: 100%;
+      background: var(--ocean);
+      border: none;
+      color: var(--white);
+      font-family: var(--font-sans); font-size: 1rem;
+      font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      padding: 1em;
+      cursor: pointer;
+      transition: background .25s;
+    }
+    .yd-submit:hover { background: var(--gold); color: var(--navy); }
+    .yd-form-success {
+      display: none;
+      text-align: center;
+      font-family: var(--font-sans);
+      color: var(--gold);
+      padding: 1.5rem;
+      letter-spacing: .1em;
+    }
+
+    /* ── BOTTOM GRID: specs + sidebar ─────────── */
+    .yd-bottom {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 0;
+      align-items: start;
+    }
+
+    /* Specs column */
+    .yd-specs-col {
+      padding: 4rem 5vw 5rem;
+      border-right: 1px solid var(--white-10);
+    }
+
+    .yd-back-link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-sans); font-size: .8rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      border: 1px solid rgba(200,169,110,.3);
+      padding: .5em 1.2em;
+      margin-bottom: 2.8rem;
+      transition: background .2s;
+    }
+    .yd-back-link:hover { background: rgba(200,169,110,.08); }
+
+    .yd-model-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem,4vw,5.5rem);
+      font-weight: 300; line-height: 1;
+      letter-spacing: -.02em;
+      color: var(--white);
+      margin-bottom: 3.5rem;
+    }
+
+    .yd-section-label {
+      font-family: var(--font-sans);
+      font-size: .85rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.6rem;
+    }
+
+    .yd-sub-label {
+      font-family: var(--font-sans);
+      font-size: .75rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--white-60);
+      margin: 2.4rem 0 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--white-10);
+    }
+
+    .yd-spec-table { display: flex; flex-direction: column; }
+    .yd-spec-row {
+      display: flex; justify-content: space-between;
+      align-items: baseline; gap: 1rem;
+      padding: .95rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .yd-spec-k {
+      font-family: var(--font-sans); font-size: .85rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--white-60); flex-shrink: 0;
+    }
+    .yd-spec-v {
+      font-family: var(--font-serif); font-size: 1.05rem; font-weight: 300;
+      color: var(--white); text-align: right;
+    }
+
+    .yd-equip-text {
+      font-family: var(--font-sans); font-size: .95rem;
+      font-weight: 300; line-height: 2;
+      color: var(--white-60);
+      margin-top: 1rem;
+    }
+
+    .yd-obs-text {
+      font-family: var(--font-sans);
+      font-size: clamp(1rem,.9vw,1.3rem);
+      font-weight: 300; line-height: 1.8;
+      color: rgba(255,255,255,.5);
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--white-10);
+      font-style: italic;
+    }
+
+    /* Sidebar */
+    .yd-sidebar {
+      padding: 4rem 2.4rem 3rem;
+      position: sticky; top: 68px;
+    }
+
+    .yd-widget {
+      border: 1px solid rgba(200,169,110,.2);
+      background: rgba(255,255,255,.02);
+    }
+    .yd-widget__head {
+      background: var(--ocean);
+      color: var(--gold);
+      font-family: var(--font-sans); font-size: .85rem;
+      font-weight: 700; letter-spacing: .25em; text-transform: uppercase;
+      text-align: center;
+      padding: 1.1rem 1rem;
+    }
+    .yd-widget__body { padding: 1.4rem 1.6rem 1.8rem; display: flex; flex-direction: column; gap: .85rem; }
+
+    .yd-widget-row { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+    .yd-widget-label {
+      font-family: var(--font-sans); font-size: .75rem;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--white-60);
+      margin-bottom: .3rem;
+    }
+
+    .yd-widget-btn {
+      width: 100%; padding: .9em;
+      background: var(--ocean); border: none;
+      color: var(--gold);
+      font-family: var(--font-sans); font-size: .85rem;
+      font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      cursor: pointer; transition: background .25s, color .25s;
+    }
+    .yd-widget-btn:hover { background: var(--gold); color: var(--navy); }
+
+    .yd-ref-tag {
+      font-family: var(--font-sans); font-size: .75rem;
+      letter-spacing: .18em; color: rgba(255,255,255,.25);
+      text-transform: uppercase;
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+
+    /* ── Not found ─────────────────────────────── */
+    .yd-notfound {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 60vh;
+      font-family: var(--font-sans); color: var(--white-60); gap: 2rem;
+    }
+
+    /* ── Responsive ────────────────────────────── */
+    @media (max-width: 900px) {
+      .yd-top, .yd-bottom { grid-template-columns: 1fr; }
+      .yd-form-panel { border-left: none; border-top: 1px solid var(--white-10); }
+      .yd-specs-col { border-right: none; padding: 3rem 5vw 2rem; }
+      .yd-sidebar { position: static; padding: 0 5vw 4rem; }
+      .yd-thumb { width: 78px; height: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="yd-topbar">
+    <a href="/"><img class="yd-topbar__logo" src="img/logo.png" alt="Yacht Collection"></a>
+    <a class="yd-topbar__back" href="/#seminovos">← Catálogo de Seminovos</a>
+  </div>
+
+  <!-- Dynamic content -->
+  <div class="yd-page" id="yd-root"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <img class="footer-logo" src="img/logo.png" alt="Yacht Collection">
+      <nav class="footer-nav">
+        <a href="/#a-empresa">A Empresa</a>
+        <a href="/#seminovos">Seminovos</a>
+        <a href="/#ag-catamaran">AG Catamaran</a>
+        <a href="/#charter-caribe">Charter Caribe</a>
+        <a href="/#charter-europa">Charter Europa</a>
+        <a href="/#contato">Contato</a>
+      </nav>
+      <div class="footer-social">
+        <a href="https://instagram.com/yachtcollection" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @yachtcollection
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Yacht Collection. Todos os direitos reservados.</span>
+    </div>
+  </footer>
+
+<script>
+/* ── Image base ─────────────────────────────────── */
+const B = 'https://easyacht.iyc.com.br/uploads/usados/';
+
+/* ── Dataset ────────────────────────────────────── */
+const DATA = {
+  1355: {
+    model:'Atlantis 51', brand:'ATLANTIS', year:2023, feet:51, nac:'Brasil',
+    mFab:'Volvo D8-800HP', mMod:'Volvo', mComb:'Diesel', mQtd:2, mAno:2023, horas:0,
+    desc:'Barco realmente impecavel, sem detalhes, pronto para navegar, completíssimo, dessalinizador, carreta de encalhe.',
+    equip:['Ancoras','Ar condicionado','Baterias','Bimini completa','Bomba de porão','Bow Thurster','Bússola','Cabo de Cais','Carregador de baterias','Chart Plotter','Churrasqueira elétrica','Computador de bordo','Contatador de corrente','Defensas','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Escada retrátil','Espaço gourmet na popa','Estabilizadores Seakeeper','Farol com controle remoto','Flaps','Fogão elétrico','Forno','Geladeira','Geradores','GPS','Guincho de Âncora elétrico','Guinchos de popa','Hard top elétrico','Ice maker','Isolamento acústico na casa de máquinas','Joystick','Luz de estrobo','Luzes submersas','Manete eletrônico','Passarela telescópica hidráulica','Piloto automático','Plataforma submergível','Radar','Rádio VHF','Salvatagem','Sistema anti-incêndio automático','Solarium de popa','Strobo light','Teka na praça de popa','Tomada de cais','TV','WC Elétrico','Antena Digital','Beach Club','Boiler','Bomba de água doce','Capota','Carreta de encalhe com pneus','Dessalinizador','Farol','Fechamento total','Grill elétrico no fly','Hard Top Rígido','Inversores','Lounge de Proa','Microondas','Ou'],
+    imgs:['grande_2_789.jpg','grande_1_223.jpg','grande_3_241.jpg','grande_4_146.jpg','grande_5_1008.jpg','grande_6_328.jpg','grande_7_215.jpg','grande_7_898.jpg','grande_8_943.jpg','grande_6_836.jpg','grande_9_555.jpg','grande_10_900.jpg','grande_11_620.jpg','grande_12_802.jpg','grande_13_646.jpg','grande_14_258.jpg','grande_15_77.jpg','grande_16_51.jpg','grande_17_620.jpg','grande_18_428.jpg','grande_19_702.jpg','grande_20_722.jpg','grande_21_389.jpg','grande_22_537.jpg','grande_23_978.jpg','grande_24_422.jpg','grande_25_756.jpg','grande_27_999.jpg','grande_26_323.jpg','grande_28_509.jpg','grande_29_138.jpg','grande_30_562.jpg','grande_31_58.jpg','grande_32_428.jpg','grande_33_814.jpg','grande_34_976.jpg','grande_35_180.jpg','grande_36_122.jpg'],
+  },
+  696: {
+    model:'ISY 106 Aventura', brand:'ISY / Inace Superyachts', year:2007, feet:106, nac:'Brasil',
+    mFab:'Volvo', mMod:'Twin x 650/hp Diesel', mComb:'Diesel', mQtd:2, mAno:2007, horas:0,
+    desc:'Superyacht com acomodações para 11 hóspedes. Flybridge com jacuzzi, cozinha equipada, adega, salão principal com bar e sky lounge.',
+    equip:[],
+    imgs:['grande_grandeimg33550_550.jpg','grande_img38_475.jpg','grande_img39_133.jpg','grande_img44_928.jpg','grande_img45_457.jpg','grande_img50_576.jpg','grande_img51_182.jpg','grande_img56_684.jpg','grande_img57_789.jpg','grande_img62_871.jpg','grande_img63_162.jpg','grande_img68_482.jpg','grande_img69_273.jpg','grande_img74_148.jpg','grande_img75_702.jpg','grande_img80_757.jpg','grande_img86_673.jpg','grande_img81_222.jpg','grande_img87_236.jpg','grande_img92_274.jpg','grande_img93_942.jpg','grande_img98_591.jpg','grande_img99_929.jpg','grande_img104_804.jpg','grande_img105_491.jpg','grande_img110_1002.jpg'],
+  },
+  1097: {
+    model:'ISY 106 Aventura', brand:'ISY / Inace Superyachts', year:2025, feet:106, nac:'Brasil',
+    mFab:'MAN', mMod:'1248', mComb:'Diesel', mQtd:2, mAno:2024, horas:800,
+    desc:'Mais do que uma embarcação, uma experiência única sobre as águas. Ambientes amplos, acabamentos refinados e navegação suave criam o cenário perfeito para momentos inesquecíveis.',
+    equip:['Ancoras','Antena Digital','Antena SKY','Antena Starlink','Ar condicionado','Aspirador de pó','Balsa de Sobrevivência Auto Inflável','Baterias','Beach Club','Bimini completa','Boiler','Bomba de água doce','Bomba de porão','Bote Inflavél','Bow Thurster','Bússola','Cabo de Cais','Carregador de baterias','Chart Plotter','Churrasqueira de carvão','Computador de bordo','Contatador de corrente','Defensas','Defletor de radar','Dessalinizador','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Escada retrátil','Espaço gourmet na popa','Estabilizadores Seakeeper','Farol com controle remoto','Fogão elétrico','Forno','Freezer','Geladeira','Geradores','GPS','Grill elétrico no fly','Guincho de Âncora elétrico','Guinchos de popa','Home-theater','Ice maker','Inversores','Isolamento acústico na casa de máquinas','Lavadora/Secadora de roupas','Lounge de Proa','Luz de estrobo','Luzes submersas','Máquina lava-louças','Microondas','Motor do Bote','Piloto automático','Pintura de fundo','Plataforma submergível','Rádio VHF','Receiver','Salvatagem','Sistema anti-incêndio automático','Solarium de popa','Solarium de'],
+    imgs:['grande_31_634.jpg','grande_30_940.jpg','grande_5_724.jpg','grande_4_181.jpg','grande_2_611.jpg','grande_32_933.jpg','grande_15_712.jpg','grande_16_80.jpg','grande_12_274.jpg','grande_14_420.jpg','grande_10_436.jpg','grande_13_884.jpg','grande_11_393.jpg','grande_34_878.jpg','grande_6_257.jpg','grande_7_404.jpg','grande_8_219.jpg','grande_9_771.jpg','grande_17_308.jpg','grande_33_58.jpg','grande_18_85.jpg','grande_27_140.jpg','grande_19_1018.jpg','grande_20_290.jpg','grande_22_164.jpg','grande_21_30.jpg','grande_29_916.jpg','grande_23_441.jpg','grande_24_785.jpg','grande_25_1007.jpg','grande_28_854.jpg','grande_26_366.jpg','grande_3_810.jpg','grande_35_101.jpg','grande_36_686.jpg'],
+  },
+  1338: {
+    model:'Azimut 83', brand:'AZIMUT', year:2019, feet:83, nac:'Brasil',
+    mFab:'MAN', mMod:'V12', mComb:'Diesel', mQtd:2, mAno:2019, horas:1800,
+    desc:'',
+    equip:['Ancoras','Ar condicionado','Baterias','Boiler','Bomba de água doce','Bomba de porão','Bow Thurster','Bússola','Capota do fly','Carregador de baterias','Churrasqueira elétrica','Dessalinizador','Direção hidráulica','Farol com controle remoto','Fechamento total','Flaps','Fogão elétrico','Freezer','Geladeira','Geradores','GPS','Guincho de Âncora elétrico','Hard Top Rígido','Ice maker','Inversores','Joystick','Microondas','Passarela hidráulica','Piloto automático','Rádio VHF','Solarium de popa','Sonda','Strobo light','Toldo','Tomada de cais','TV','WC Elétrico'],
+    imgs:['grande_azimut83_538.jpg','grande_azimutfly83bowsunpad11536x1024_847.jpg','grande_azimutfly83flybridge6_652.jpg','grande_azimutfly83flybridgedinettetableversion768x512_890.jpg'],
+  },
+  1347: {
+    model:'Intermarine 80', brand:'INTERMARINE', year:2017, feet:80, nac:'Brasil',
+    mFab:'MAN', mMod:'MAN 1550', mComb:'Diesel', mQtd:2, mAno:2017, horas:1550,
+    desc:'',
+    equip:['Ancoras','Antena SKY','Ar condicionado','Baterias','Bimini completa','Boiler','Bomba de água doce','Bomba de porão','Bow Thurster','Bússola','Cabo de Cais','Capota do fly','Carregador de baterias','Chart Plotter','Churrasqueira elétrica','Computador de bordo','Defensas','Defletor de radar','Dessalinizador','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Estabilizador Aletas','Farol','Farol com controle remoto','Fechamento total','Flaps','Fogão elétrico','Forno','Freezer','Geladeira','Geradores','GPS','Grill elétrico no fly','Hard Top Rígido','Home-theater','Ice maker','Isolamento acústico na casa de máquinas','Luz de estrobo','Máquina lava-louças','Microondas','Passarela hidráulica','Piloto automático','Plataforma submergível','Rádio VHF','Receiver','Salvatagem','Sistema de monitoramento-Bonings','Som','Sonda','Stern Thruster','Strobo light','Teka Fly','Teka na Popa','Teka na praça de popa','Tomada de cais','TV','WC Elétrico'],
+    imgs:['grande_1_962.jpg','grande_3_275.jpg','grande_2_728.jpg','grande_4_14.jpg','grande_5_28.jpg','grande_6_648.jpg','grande_7_140.jpg','grande_8_668.jpg','grande_9_413.jpg','grande_10_995.jpg','grande_11_617.jpg','grande_12_139.jpg','grande_13_904.jpg','grande_14_688.jpg','grande_15_526.jpg','grande_16_412.jpg','grande_17_499.jpg','grande_18_980.jpg','grande_19_978.jpg','grande_20_228.jpg','grande_21_83.jpg','grande_22_281.jpg','grande_23_338.jpg','grande_24_214.jpg','grande_25_1018.jpg','grande_26_383.jpg','grande_27_625.jpg','grande_28_882.jpg','grande_29_713.jpg','grande_30_141.jpg'],
+  },
+  1356: {
+    model:'Schaefer Yachts 77', brand:'SCHAEFER YACHTS', year:2019, feet:77, nac:'Brasil',
+    mFab:'Volvo Penta', mMod:'IPS 950', mComb:'Diesel', mQtd:3, mAno:2019, horas:725,
+    desc:'',
+    equip:['Ancoras','Beach Club','Boiler','Bomba de água doce','Bomba de porão','Bow Thurster','Bússola','Cabo de Cais','Carregador de baterias','Chart Plotter','Churrasqueira elétrica','Computador de bordo','Contatador de corrente','Defensas','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Escada retrátil','Espaço gourmet na popa','Estabilizador ARG','Farol com controle remoto','Fechamento total','Flaps','Fogão elétrico','Forno','Freezer','Garagem Bote/Jet Ski','Geladeira','Geradores','GPS','Grill','Grill elétrico no fly','Guincho de Âncora elétrico','Guinchos de popa','Hard Top Rígido','Ice maker','Joystick','Lounge de Proa','Luz de estrobo','Luzes submersas','Manete eletrônico','Passarela telescópica hidráulica','Piloto automático','Plataforma submergível','Radar','Rádio VHF','Salvatagem','Sistema anti-incêndio automático','Solarium de proa','Som','Teka na Popa','Teka na praça de popa','Tomada de cais','TV','Ventiladores','WC Elétrico'],
+    imgs:['grande_1_782.jpg','grande_2_256.jpg','grande_6_299.jpg','grande_5_818.jpg','grande_3_678.jpg','grande_4_1014.jpg','grande_7_677.jpg','grande_8_105.jpg','grande_9_613.jpg','grande_10_949.jpg','grande_11_310.jpg','grande_12_701.jpg','grande_13_176.jpg','grande_14_251.jpg','grande_15_840.jpg','grande_16_567.jpg','grande_17_298.jpg','grande_18_648.jpg','grande_19_788.jpg','grande_20_623.jpg','grande_21_151.jpg','grande_22_644.jpg','grande_23_292.jpg','grande_24_216.jpg','grande_25_271.jpg','grande_26_893.jpg','grande_27_626.jpg','grande_28_444.jpg','grande_29_650.jpg','grande_30_351.jpg','grande_31_928.jpg','grande_32_196.jpg','grande_33_128.jpg','grande_34_12.jpg','grande_35_715.jpg','grande_36_458.jpg','grande_37_532.jpg','grande_38_81.jpg','grande_39_669.jpg','grande_40_614.jpg','grande_41_835.jpg','grande_42_594.jpg','grande_43_219.jpg','grande_44_250.jpg','grande_45_308.jpg','grande_46_641.jpg','grande_47_515.jpg','grande_48_975.jpg','grande_49_968.jpg','grande_50_979.jpg','grande_51_37.jpg','grande_52_445.jpg','grande_53_886.jpg'],
+  },
+  1343: {
+    model:'Azimut 74', brand:'AZIMUT', year:2020, feet:74, nac:'Brasil',
+    mFab:'MAN', mMod:'MAN 1400HP', mComb:'Diesel', mQtd:2, mAno:2020, horas:1400,
+    desc:'Único dono, finamente tratado, todas as revisões em dia, todos os equipamentos em funcionamento.',
+    equip:['Ancoras','Antena SKY','Ar condicionado','Baterias','Boiler','Bomba de água doce','Bomba de porão','Bússola','Carregador de baterias','Direção hidráulica','Escada retrátil','Flaps','Fogão elétrico','Forno','Geladeira','Geradores','GPS','Grill elétrico no fly','Guincho de Âncora elétrico','Hard top elétrico','Ice maker','Inversores','Joystick','Luz de estrobo','Luzes submersas','Microondas','Passarela hidráulica','Rádio VHF','Sistema anti-incêndio automático','Som','Strobo light','Teka Fly','Teka na Popa','Teka no Passadiço','Toldo móvel na praça de popa','Tomada de cais','TV','WC Elétrico'],
+    imgs:['grande_1_754.jpg','grande_2a_216.jpg','grande_20_470.jpg','grande_2b_655.jpg','grande_10_113.jpg','grande_26_676.jpg','grande_27_464.jpg','grande_3_77.jpg','grande_7_787.jpg','grande_5_708.jpg','grande_4_922.jpg','grande_6_5.jpg','grande_21_469.jpg','grande_11_954.jpg','grande_8_766.jpg','grande_9_966.jpg','grande_15_614.jpg','grande_22_723.jpg','grande_5_456.jpg','grande_14_107.jpg','grande_4_710.jpg','grande_13_864.jpg','grande_18_653.jpg','grande_1_663.jpg','grande_23_236.jpg','grande_10_838.jpg','grande_7_602.jpg','grande_2_624.jpg','grande_11_733.jpg','grande_12_910.jpg','grande_19_225.jpg','grande_17_468.jpg','grande_16_229.jpg','grande_3_373.jpg','grande_6_931.jpg','grande_8_684.jpg','grande_9_311.jpg','grande_12_800.jpg','grande_13_399.jpg','grande_24_606.jpg','grande_14_729.jpg','grande_25_601.jpg'],
+  },
+  1315: {
+    model:'Segue 72', brand:'SEGUE', year:2012, feet:72, nac:'Brasil',
+    mFab:'MTU', mMod:'MTU 1500', mComb:'Diesel', mQtd:2, mAno:2012, horas:1500,
+    desc:'Refit completo em 2022. Eletrônicos RAYMARINE AXION 12, radar, GPS e sonda. Piloto automático RAYMARINE. Sete ar-condicionados CRUISAIR.',
+    equip:['Ancoras','Antena SKY','Ar condicionado','Baterias','Bomba de água doce','Bomba de porão','Bow Thurster','Bússola','Cabo de Cais','Carregador de baterias','Chart Plotter','Churrasqueira elétrica','Contatador de corrente','Defensas','Defletor de radar','Dessalinizador','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Escada retrátil','Espaço gourmet na popa','Farol com controle remoto','Fechamento total','Flaps','Fogão elétrico','Forno','Freezer','Geladeira','Geradores','GPS','Grill','Guincho de Âncora elétrico','Guinchos de popa','Home-theater','Ice maker','Inversores','Isolamento acústico na casa de máquinas','Joystick','Luz de estrobo','Luzes submersas','Manete eletrônico','Máquina lava-louças','Microondas','Passarela telescópica hidráulica','Piloto automático','Pintura de fundo','Plataforma submergível','Radar','Rádio VHF','Receiver','Salvatagem','Sistema anti-incêndio automático','Sistema de monitoramento-Bonings','Solarium de proa','Som','Sonda','Stern Thruster','Strobo light','Teka na Popa','Teka na praça de popa','Teka no cockpit','Toldo fixo na praça de popa','Tomada de cais','TV','Ventil'],
+    imgs:['grande_segue722012_583.jpg','grande_den5462a_1.jpg','grande_den5454a_803.jpg','grande_den5496_71.jpg','grande_den5469a_31.jpg','grande_den5393_292.jpg','grande_den5364_353.jpg','grande_den5420_574.jpg','grande_den5357_418.jpg','grande_den5389_431.jpg','grande_den5398_537.jpg','grande_den5228_971.jpg','grande_den5257_872.jpg','grande_den5284_25.jpg','grande_den5249_303.jpg','grande_den5224_966.jpg','grande_den5220_596.jpg','grande_den5222_222.jpg','grande_den5230_581.jpg','grande_den5316_701.jpg','grande_den5330_193.jpg','grande_den5182_611.jpg','grande_den5434_645.jpg','grande_den5211_181.jpg','grande_den5205_114.jpg','grande_den5343_123.jpg','grande_den5354_996.jpg','grande_den5450_971.jpg','grande_den5165_403.jpg','grande_den5083_428.jpg','grande_den4957_996.jpg','grande_den5013_966.jpg','grande_den5090_657.jpg','grande_den5126_581.jpg','grande_den5068_2.jpg','grande_den5007_585.jpg','grande_den5138_852.jpg','grande_den5158_460.jpg','grande_den5509_333.jpg','grande_den55121_835.jpg'],
+  },
+  339: {
+    model:'Azimut 72 S', brand:'AZIMUT', year:2012, feet:72, nac:'Brasil',
+    mFab:'MAN', mMod:'V12', mComb:'Diesel', mQtd:2, mAno:2012, horas:1800,
+    desc:'Eletrônicos de navegação substituídos em 2023. Reforma completa com nova estofaria em todo o barco.',
+    equip:['Antena SKY','Ar condicionado','Bimini completa','Bomba de água doce','Bomba de porão','Bow Thurster','Bússola','Cabo de Cais','Capota','Capota do fly','Defensas','Ducha na Plataforma de Popa','Flaps','Fogão elétrico','Forno','Freezer','Garagem Bote/Jet Ski','Geladeira','Gridle','Pintura de fundo','Radar','Rádio SSB','Rádio VHF','Receiver','Sistema anti-incêndio automático','Teka na praça de popa','Teka na Proa','Teka no cockpit','Teka no Passadiço','Tomada de cais','Tridata','WC Elétrico'],
+    imgs:['grande_designsemnome_648.jpg','grande_7c5c9.jpg','grande_e9385.jpg','grande_d3681.jpg','grande_d1638.jpg','grande_71a17.jpg','grande_79d49.jpg','grande_fa454.jpg','grande_3fad6.jpg','grande_66266.jpg','grande_0a3c8.jpg','grande_be05e.jpg','grande_f6811.jpg','grande_ad149.jpg','grande_0385b.jpg','grande_a688f.jpg','grande_a7094.jpg','grande_44626.jpg','grande_60dbd.jpg','grande_015_598.jpg','grande_55025.jpg','grande_033_1024.jpg','grande_efa25.jpg','grande_023_484.jpg','grande_053_1000.jpg','grande_3702f.jpg','grande_043_196.jpg','grande_31_496.jpg','grande_093_775.jpg','grande_135_866.jpg','grande_143_152.jpg','grande_8a836.jpg','grande_083_1008.jpg','grande_163_117.jpg','grande_103_822.jpg','grande_113_736.jpg','grande_481ac.jpg','grande_26f1d.jpg','grande_4dd79.jpg','grande_073_280.jpg','grande_063_491.jpg','grande_123_29.jpg','grande_153_322.jpg','grande_3f598.jpg','grande_afbb5.jpg'],
+  },
+  1298: {
+    model:'Ferretti 70', brand:'FERRETTI', year:2010, feet:70, nac:'Brasil',
+    mFab:'MAN', mMod:'v12 Common rail', mComb:'Diesel', mQtd:2, mAno:2010, horas:1224,
+    desc:'4 suites, Estabilizadores Quick, Grua eletrica, hard top com teto solar elétrico, Teca nova, super equipada,',
+    equip:['Ancoras','Antena Digital','Antena SKY','Ar condicionado','Baterias','Bow Thurster','Bússola','Cabo de Cais','Chart Plotter','Churrasqueira elétrica','Computador de bordo','Contatador de corrente','Defensas','Dessalinizador','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Escada retrátil','Estabilizador ARG','Farol com controle remoto','Fechamento total','Flaps','Fogão elétrico','Forno','Freezer','Geladeira','GPS','Grill','Grill elétrico no fly','Guincho de Âncora elétrico','Hard top elétrico','Ice maker','Inversores','Isolamento acústico na casa de máquinas','Joystick','Lavadora/Secadora de roupas','Lounge de Proa','Manete de  manobra à popa  (3ºcomando)','Manete eletrônico','Passarela telescópica hidráulica','Piloto automático','Pintura de fundo','Radar','Rádio VHF','Salvatagem','Sistema anti-incêndio automático','Som','Sonda','Strobo light','Teka na Popa','Teka no cockpit','Tomada de cais','Tridata','WC Elétrico'],
+    imgs:['grande_imagenssiteseminovos_878.jpg','grande_05_128.jpg','grande_06_368.jpg','grande_07_964.jpg','grande_08_192.jpg','grande_26_137.jpg','grande_24_299.jpg','grande_23_654.jpg','grande_25_34.jpg','grande_09_616.jpg','grande_11_980.jpg','grande_12_15.jpg','grande_13_847.jpg','grande_14_854.jpg','grande_15_207.jpg','grande_10_394.jpg','grande_18_308.jpg','grande_16_728.jpg','grande_17_623.jpg','grande_19_1009.jpg','grande_20_85.jpg','grande_21_173.jpg','grande_22_626.jpg','grande_27_597.jpg','grande_28_6.jpg','grande_29_883.jpg','grande_30_510.jpg','grande_31_798.jpg','grande_32_354.jpg','grande_33_890.jpg'],
+  },
+  1098: {
+    model:'Azimut 70', brand:'AZIMUT', year:2017, feet:70, nac:'Brasil',
+    mFab:'MAN', mMod:'MAN 1400HP', mComb:'Diesel', mQtd:2, mAno:2017, horas:1400,
+    desc:'Barco super completo com 02 estabilizadores, SKY, etc',
+    equip:['Ancoras','Antena Digital','Antena SKY','Ar condicionado','Baterias','Boiler','Bomba de água doce','Bomba de porão','Bow Thurster','Bússola','Cabo de Cais','Carregador de baterias','Chart Plotter','Churrasqueira elétrica','Defensas','Defletor de radar','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Estabilizadores Seakeeper','Farol','Farol com controle remoto','Fechamento total','Flaps','Fogão elétrico','Forno','Freezer','Geladeira','Geradores','GPS','Grill elétrico no fly','Guincho de Âncora elétrico','Hard Top Rígido','Ice maker','Isolamento acústico na casa de máquinas','Luzes submersas','Manete eletrônico','Microondas','Piloto automático','Pintura de fundo','Plataforma submergível','Radar','Rádio VHF','Receiver','Salvatagem','Sistema anti-incêndio','Sistema anti-incêndio automático','Solarium de proa','Som','Sonda','Teka na Popa','Teka na praça de popa','Tomada de cais','TV','WC Elétrico'],
+    imgs:['grande_designsemnome_196.jpg','grande_18_1019.jpg','grande_15_712.jpg','grande_16_827.jpg','grande_17_201.jpg','grande_11_922.jpg','grande_10_733.jpg','grande_12_239.jpg','grande_9_324.jpg','grande_14_422.jpg','grande_8_860.jpg','grande_5_603.jpg','grande_6_411.jpg','grande_4_64.jpg','grande_3_214.jpg','grande_7_894.jpg','grande_2_860.jpg','grande_13_896.jpg'],
+  },
+  1255: {
+    model:'Azimut 70', brand:'AZIMUT', year:2017, feet:70, nac:'Brasil',
+    mFab:'MAN', mMod:'MAN 1400HP', mComb:'Diesel', mQtd:2, mAno:2017, horas:1400,
+    desc:'estabilizador seakeeper,2 geradores ONAN',
+    equip:['Ancoras','Antena SKY','Ar condicionado','Aspirador de pó','Baterias','Bimini completa','Boiler','Bomba de água doce','Bomba de porão','Bow Thurster','Bússola','Cabo de Cais','Carregador de baterias','Chart Plotter','Churrasqueira elétrica','Computador de bordo','Contatador de corrente','Defensas','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Escada retrátil','Espaço gourmet na popa','Estabilizadores Seakeeper','Farol','Forno','Freezer','Geladeira','GPS','Hard Top Rígido','Home-theater','Ice maker','Inversores','Manete eletrônico','Microondas','Passarela telescópica hidráulica','Piloto automático','Pintura de fundo','Plataforma submergível','Radar'],
+    imgs:['grande_imagemseminos_500.jpg','grande_designsemnome_199.jpg'],
+  },
+  1306: {
+    model:'Intermarine 680 Full', brand:'INTERMARINE', year:2008, feet:68, nac:'Brasil',
+    mFab:'MTU', mMod:'1200', mComb:'Diesel', mQtd:2, mAno:2008, horas:1200,
+    desc:'Intermarine 680 Full com Starlink.',
+    equip:['Ancoras','Antena SKY','Ar condicionado','Boiler','Bow Thurster','Bússola','Cabo de Cais','Capota do fly','Chart Plotter','Churrasqueira elétrica','Defensas','Direção hidráulica','Enxoval','Escada retrátil','Espaço gourmet na popa','Fogão elétrico','Freezer','Geladeira','Geradores','Guincho de Âncora elétrico','Inversores','Pintura de fundo','Plataforma submergível'],
+    imgs:['grande_intermarine6802008_288.jpg','grande_02a_464.jpg','grande_11_608.jpg','grande_01_382.jpg','grande_06_996.jpg','grande_10_337.jpg','grande_12_256.jpg','grande_13_741.jpg','grande_15_788.jpg','grande_16_820.jpg','grande_17_458.jpg','grande_20_194.jpg','grande_19_36.jpg','grande_27_461.jpg','grande_22_286.jpg','grande_23_824.jpg','grande_24_768.jpg','grande_25_407.jpg','grande_29_418.jpg','grande_30_698.jpg','grande_31_125.jpg','grande_08_62.jpg'],
+  },
+  1294: {
+    model:'Global 68', brand:'GLOBAL', year:2020, feet:68, nac:'Brasil',
+    mFab:'Volvo Penta', mMod:'D4', mComb:'Diesel', mQtd:1, mAno:2020, horas:260,
+    desc:'Fogão de indução, Forno e máquina de lavar louça Miele. Geladeira VITRIFRIGO com freezer. Ice maker FOLLET. Garagem para mini-jet Williams. Iluminação subaquática.',
+    equip:['AIS','Ancoras','Antena Digital','Antena SKY','Ar condicionado','Balsa de Sobrevivência Auto Inflável','Baterias','Bimini completa','Boiler','Bomba de água doce','Bomba de porão','Bússola','Cabo de Cais','Chart Plotter','Churrasqueira elétrica','Computador de bordo','Contatador de corrente','Defensas','Defletor de radar','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Escada retrátil','Farol','Fechamento total','Fish finder','Fogão elétrico','Forno','Freezer','Garagem Bote/Jet Ski','Geladeira','Geradores','GPS','Grill elétrico no fly','Guincho de Âncora elétrico','Hard Top Rígido','Ice maker','Inversores','Lona de cobertura','Manete eletrônico','Máquina lava-louças','Passarela telescópica hidráulica','Piloto automático','Pintura de fundo','Radar','Rádio VHF','Salvatagem','Sistema anti-incêndio','Som','Tomada de cais','Tridata','TV','WC Elétrico'],
+    imgs:['grande_global682020_309.jpg','grande_10a_829.jpg','grande_12a_264.jpg','grande_13_132.jpg','grande_14a_799.jpg','grande_01_675.jpg','grande_07_751.jpg','grande_02_709.jpg','grande_03_993.jpg','grande_05_155.jpg','grande_11_866.jpg','grande_04_644.jpg','grande_06_360.jpg','grande_08_863.jpg','grande_09_913.jpg'],
+  },
+  1275: {
+    model:'Azimut 62', brand:'AZIMUT', year:2022, feet:62, nac:'Brasil',
+    mFab:'Volpo Penta', mMod:'D13', mComb:'Diesel', mQtd:2, mAno:2022, horas:900,
+    desc:'Única com 3 postos de comando.',
+    equip:['Antena Digital','Antena SKY','Ar condicionado','Bimini completa','Bow Thurster','Cabo de Cais','Churrasqueira elétrica','Computador de bordo','Defensas','Direção hidráulica','Ducha na Plataforma de Popa','Enxoval','Espaço gourmet na popa','Estabilizadores Seakeeper','Geradores','Hard Top Rígido','Luz de estrobo','Passarela telescópica hidráulica','Piloto automático','Pintura de fundo','Plataforma submergível','Salvatagem','Sistema anti-incêndio automático','Solarium de proa','Teka na Popa','Teka na praça de popa','Toldo móvel na praça de popa'],
+    imgs:['grande_designsemnome_410.jpg','grande_dji0197aprimoradonr_114.jpg','grande_dji0204aprimoradonr_994.jpg','grande_dji0201aprimoradonr_330.jpg','grande_img6046editar_286.jpg','grande_img5896editar_414.jpg','grande_img5894editar_987.jpg','grande_img5914editar_687.jpg','grande_img5912editar_1022.jpg','grande_img5919editar_1013.jpg','grande_img5921editar_814.jpg','grande_img5994editarcopia_592.jpg','grande_img5979editar_812.jpg','grande_img6003editar_31.jpg','grande_img5998editar_336.jpg','grande_img5788editar_795.jpg','grande_img5703editar_443.jpg','grande_img5751editar_353.jpg','grande_img5706editar_934.jpg','grande_img5795editar_177.jpg','grande_img5781editar_572.jpg','grande_img5683editar_648.jpg','grande_img5798editar_165.jpg','grande_img5809editar_146.jpg','grande_img5834editar_659.jpg','grande_img5843editar_871.jpg','grande_img5861editar_220.jpg','grande_img5718editar_67.jpg','grande_img5721editar_99.jpg','grande_img5654editar_97.jpg','grande_img5666editar_116.jpg','grande_img5671editar_997.jpg'],
+  },
+  1336: {
+    model:'Real 60 Luxury', brand:'REAL', year:2019, feet:60, nac:'Brasil',
+    mFab:'Cummins', mMod:'Cummins 600', mComb:'Diesel', mQtd:2, mAno:2019, horas:600,
+    desc:'',
+    equip:['Ancoras','Antena SKY','Ar condicionado','Baterias','Boiler','Bomba de água doce','Bomba de porão','Fogão elétrico','Geladeira','Microondas','Rádio VHF','TV','WC Elétrico','Passarela hidráulica','Bússola','Cabo de Cais','Carregador de baterias','Defensas','Defletor de radar','Direção hidráulica','Ducha na Plataforma de Popa','Espaço gourmet na popa','Forno','GPS','Guincho de Âncora elétrico','Home-theater','Ice maker','Plataforma submergível','Salvatagem','Som','Teka na Popa','Teka na praça de popa'],
+    imgs:['grande_1_480.jpg','grande_2_1023.jpg','grande_3_861.jpg','grande_4_965.jpg','grande_5_241.jpg','grande_6_450.jpg','grande_7_387.jpg','grande_8_945.jpg','grande_9_471.jpg','grande_10_324.jpg','grande_11_658.jpg','grande_12_945.jpg','grande_13_521.jpg','grande_14_998.jpg','grande_15_958.jpg','grande_16_653.jpg','grande_17_1025.jpg'],
+  },
+  1307: {
+    model:'Intermarine 60', brand:'INTERMARINE', year:2020, feet:60, nac:'Brasil',
+    mFab:'Volpo Penta', mMod:'D13', mComb:'Diesel', mQtd:2, mAno:2020, horas:900,
+    desc:'Intermarine 60 com Starlink.',
+    equip:['Antena SKY','Ar condicionado','Aspirador de pó','Baterias','Bimini completa','Boiler','Bow Thurster','Cabo de Cais','Carregador de baterias','Churrasqueira elétrica','Defensas','Direção hidráulica','Enxoval','Espaço gourmet na popa','Fogão elétrico','Guincho de Âncora elétrico','Hard top elétrico','Home-theater','Lona de cobertura','Manete eletrônico','Plataforma submergível','Salvatagem','Teka Fly','Teka na Popa'],
+    imgs:['grande_intermarine602020_711.jpg','grande_02_1008.jpg','grande_03_1012.jpg','grande_04_714.jpg','grande_07_793.jpg','grande_08_728.jpg','grande_18_669.jpg','grande_19_657.jpg','grande_09_553.jpg','grande_10_63.jpg','grande_11_212.jpg','grande_12_881.jpg','grande_13_215.jpg','grande_14_124.jpg','grande_15_973.jpg','grande_16_945.jpg','grande_17_989.jpg','grande_05_546.jpg','grande_06_881.jpg'],
+  },
+  1361: {
+    model:'Intermarine 60', brand:'INTERMARINE', year:2012, feet:60, nac:'Brasil',
+    mFab:'Volpo Penta', mMod:'D13', mComb:'Diesel', mQtd:2, mAno:2012, horas:900,
+    desc:'',
+    equip:['Ar condicionado','Bow Thurster','Fechamento total','Geladeira','Ice maker','Microondas','Passarela hidráulica','Plataforma submergível','Som','Stern Thruster','Teka na Popa','Teka no Passadiço','TV','Ancoras','Antena SKY','Boiler','Bomba de porão','Bote Inflavél','Carregador de baterias','Computador de bordo','Contatador de corrente','Defensas','Defletor de radar','Direção hidráulica','Ducha na Plataforma de Popa','Escada retrátil','Espaço gourmet na popa','Fogão elétrico','Geradores','GPS','Guincho de Âncora elétrico','Home-theater','Luz de estrobo','Manete eletrônico','Passarela telescópica hidráulica','Radar','Rádio VHF','Salvatagem','Tomada de cais','WC Elétrico','Farol','Bússola','Cabo de Cais'],
+    imgs:['grande_1_939.jpg','grande_2_697.jpg','grande_3_42.jpg','grande_4_113.jpg','grande_5_378.jpg','grande_6_193.jpg','grande_7_879.jpg','grande_8_760.jpg','grande_9_243.jpg','grande_10_732.jpg','grande_11_793.jpg','grande_12_738.jpg','grande_13_105.jpg','grande_14_676.jpg','grande_15_234.jpg','grande_16_45.jpg','grande_17_607.jpg'],
+  },
+  1286: {
+    model:'Azimut 56', brand:'AZIMUT', year:2018, feet:56, nac:'Brasil',
+    mFab:'Volvo', mMod:'D11', mComb:'Diesel', mQtd:2, mAno:2018, horas:725,
+    desc:'Impecavelmente decorada. Bem equipada. Eletronicos Furuno, gerador Onam.',
+    equip:['Ancoras','Antena SKY','Ar condicionado','Bomba de água doce','Bow Thurster','Bússola','Cabo de Cais','Churrasqueira elétrica','Computador de bordo','Contatador de corrente','Defensas','Direção hidráulica','Enxoval','Fogão elétrico','Forno','Freezer','Geladeira','Geradores','GPS','Grill elétrico no fly','Inversores','Luz de estrobo','Manete eletrônico','Teka na Popa','Teka no cockpit','TV','WC Elétrico'],
+    imgs:['grande_azimut56_742.jpg','grande_24a_1013.jpg','grande_19a_507.jpg','grande_31a_923.jpg','grande_20_922.jpg','grande_25a_185.jpg','grande_21_856.jpg','grande_23_521.jpg','grande_22_100.jpg','grande_02_960.jpg','grande_05_913.jpg','grande_07_488.jpg','grande_13_596.jpg','grande_15_790.jpg','grande_04_574.jpg','grande_32_1007.jpg','grande_16_309.jpg','grande_17_473.jpg','grande_12_231.jpg','grande_14_436.jpg','grande_01_546.jpg','grande_10_996.jpg','grande_11_889.jpg','grande_03_406.jpg','grande_06_156.jpg','grande_09_277.jpg','grande_27_584.jpg','grande_28_155.jpg','grande_18_600.jpg','grande_30_857.jpg'],
+  },
+  1297: {
+    model:'Power Cat AG 54', brand:'AG CATAMARAN', year:2025, feet:54, nac:'Brasil',
+    mFab:'Yanmar', mMod:'6LPA-STZP Bravo 3', mComb:'Diesel', mQtd:2, mAno:2025, horas:315,
+    desc:'Comprimento: 54 pés = 16,10m | Boca = 7,45m | 18 toneladas.',
+    equip:[],
+    imgs:['grande_agpowercat54_593.jpg','grande_03_204.jpg','grande_04_321.jpg','grande_01_236.jpg','grande_06_320.jpg','grande_08_444.jpg','grande_09_16.jpg','grande_11_9.jpg','grande_12_496.jpg','grande_10_191.jpg','grande_13_369.jpg','grande_14_568.jpg','grande_15_536.jpg','grande_16_506.jpg','grande_17_1013.jpg','grande_18_677.jpg','grande_19_70.jpg','grande_20_431.jpg'],
+  },
+  813: {
+    model:'Intermarine 520 Full', brand:'INTERMARINE', year:2007, feet:52, nac:'Brasil',
+    mFab:'Volvo Penta', mMod:'D12', mComb:'Diesel', mQtd:2, mAno:2007, horas:675,
+    desc:'Ar condicionado, antena Star link, Gps Sky, Led sub Fechamento total Obs.; estofaria nova, teca popa, ponte elétrica.',
+    equip:['Ancoras','Antena SKY','Ar condicionado','Baterias','Bomba de água doce','Bomba de porão','Bow Thurster','Capota do fly','Fogão elétrico','Geladeira','Geradores','Guincho de Âncora elétrico','Luzes submersas','Passarela telescópica hidráulica','Rádio VHF','WC Elétrico','Farol','Fechamento total','Forno','Freezer','GPS','Inversores','Isolamento acústico na casa de máquinas','Salvatagem','Toldo','Tomada de cais'],
+    imgs:['grande_1_805.jpg','grande_2_822.jpg','grande_3_1005.jpg','grande_4_689.jpg','grande_5_501.jpg','grande_6_403.jpg','grande_7_518.jpg','grande_8_679.jpg','grande_9_212.jpg','grande_10_758.jpg','grande_11_776.jpg','grande_12_59.jpg','grande_13_640.jpg','grande_14_684.jpg','grande_15_651.jpg','grande_16_1018.jpg','grande_17_659.jpg','grande_18_282.jpg','grande_19_500.jpg','grande_20_886.jpg'],
+  },
+  1270: {
+    model:'Azimut 50', brand:'AZIMUT', year:2015, feet:50, nac:'Brasil',
+    mFab:'Cummins', mMod:'Cummins 600', mComb:'Diesel', mQtd:2, mAno:2015, horas:600,
+    desc:'',
+    equip:['Ancoras','Antena Digital','Antena SKY','Ar condicionado','Aspirador de pó','Boiler','Bomba de água doce','Capota do fly','Carregador de baterias','Carreta de Encalhe com Rodas de Madeira','Churrasqueira elétrica','Espaço gourmet na popa','Joystick','Passarela hidráulica','Plataforma submergível','Sistema anti-incêndio','Teka na Popa'],
+    imgs:['grande_designsemnome_72.jpg','grande_12a_600.jpg','grande_14a_308.jpg','grande_15_667.jpg','grande_07_583.jpg','grande_01_106.jpg','grande_13_16.jpg','grande_11_639.jpg','grande_05_879.jpg','grande_06_385.jpg','grande_04_764.jpg','grande_02_888.jpg','grande_08_455.jpg','grande_09_773.jpg','grande_03_865.jpg','grande_10_623.jpg'],
+  },
+  1316: {
+    model:'Intermarine 480 Full', brand:'INTERMARINE', year:2009, feet:48, nac:'Brasil',
+    mFab:'Volvo Penta', mMod:'IPS', mComb:'Diesel', mQtd:2, mAno:2009, horas:600,
+    desc:'Intermarine 480 Full com propulsão IPS Volvo Penta. Joystick, espaço gourmet na popa.',
+    equip:['Ancoras','Ar condicionado','Baterias','Bimini completa','Boiler','Bomba de água doce','Bomba de porão','Bússola','Cabo de Cais','Capota do fly','Carreta de encalhe com pneus','Chart Plotter','Computador de bordo','Contatador de corrente','Defensas','Ducha na Plataforma de Popa','Enxoval','Escada retrátil','Espaço gourmet na popa','Farol com controle remoto','Flaps','Fogão elétrico','Freezer','Geladeira','Geradores','Grill','Guincho de Âncora elétrico','Joystick','Microondas','Pintura de fundo','Radar','Rádio VHF','Receiver','Salvatagem','Sistema anti-incêndio','Solarium de proa','Som','Sonda','Strobo light','Tomada de cais','TV','WC Elétrico'],
+    imgs:['grande_intermarine480full2009_578.jpg','grande_03_305.jpg','grande_05_523.jpg','grande_07_448.jpg','grande_02_831.jpg','grande_04_9.jpg','grande_06_651.jpg'],
+  },
+  1280: {
+    model:'Intermarine 46 OffShore', brand:'INTERMARINE', year:2003, feet:46, nac:'Brasil',
+    mFab:'Mercedes Benz', mMod:'Megatech Dumon', mComb:'Diesel', mQtd:2, mAno:2003, horas:720,
+    desc:'Os básicos de uma offshore com dupla motorização Mercedes Benz Megatech Dumon.',
+    equip:['Ancoras','Ar condicionado','Baterias','Boiler','Bomba de água doce','Bomba de porão','Bússola','Cabo de Cais','Carregador de baterias','Carreta de encalhe com pneus','Defensas','Ducha na Plataforma de Popa','Fechamento total','Geladeira','Geradores','GPS','Isolamento acústico na casa de máquinas','Microondas','Rádio VHF','Salvatagem','Som','Strobo light','Ventiladores','WC Elétrico','Capota'],
+    imgs:['grande_imagenssiteseminovos_91.jpg','grande_imagenssiteseminovos_961.jpg','grande_2_289.jpg','grande_3_1.jpg','grande_4_823.jpg','grande_5_488.jpg','grande_6_416.jpg','grande_7_248.jpg','grande_8_359.jpg','grande_9_289.jpg','grande_10_366.jpg','grande_11_940.jpg','grande_12_498.jpg','grande_13_786.jpg','grande_14_415.jpg','grande_15_326.jpg','grande_16_909.jpg','grande_17_70.jpg','grande_18_1014.jpg','grande_19_548.jpg','grande_20_710.jpg','grande_21_980.jpg','grande_22_346.jpg','grande_23_377.jpg','grande_24_306.jpg','grande_25_349.jpg','grande_26_316.jpg','grande_27_585.jpg','grande_28_363.jpg'],
+  },
+  1207: {
+    model:'Genesis 44', brand:'GENESIS', year:2012, feet:44, nac:'Brasil',
+    mFab:'Volvo Penta', mMod:'D6', mComb:'Diesel', mQtd:2, mAno:2012, horas:435,
+    desc:'',
+    equip:['Ancoras','Ar condicionado','Baterias','Boiler','Bomba de água doce','Bomba de porão','Bússola','Cabo de Cais','Capota do fly','Carregador de baterias','Carreta de encalhe com pneus','Defensas','Direção hidráulica','Ducha na Plataforma de Popa','Escada retrátil','Espaço gourmet na popa','Flaps','Fogão elétrico','Geladeira','Geradores','GPS','Guincho de Âncora elétrico','Manete eletrônico','Microondas','Radar','Rádio VHF','Salvatagem','Solarium de proa','Som','Teka no cockpit','Tomada de cais','TV','WC Elétrico'],
+    imgs:['grande_1_698.jpg','grande_2_115.jpg','grande_03_16.jpg','grande_13_18.jpg','grande_11_141.jpg','grande_08_644.jpg','grande_10_367.jpg','grande_09_439.jpg','grande_12_145.jpg','grande_15_345.jpg','grande_04_760.jpg','grande_05_61.jpg','grande_06_37.jpg','grande_07_937.jpg','grande_14_349.jpg','grande_17_558.jpg'],
+  },
+  1332: {
+    model:'Real 42', brand:'REAL', year:2016, feet:42, nac:'Brasil',
+    mFab:'Mercury', mMod:'Mercury', mComb:'Diesel', mQtd:2, mAno:2016, horas:370,
+    desc:'',
+    equip:['Ar condicionado','Baterias','Boiler','Bomba de água doce','Bomba de porão','Geradores','GPS','Rádio VHF'],
+    imgs:['grande_real422016id1332_805.jpg'],
+  },
+  1319: {
+    model:'CarbrasMar 41', brand:'CARBRASMAR', year:1987, feet:41, nac:'Brasil',
+    mFab:'Caterpillar', mMod:'C 6', mComb:'Diesel', mQtd:2, mAno:2011, horas:460,
+    desc:'',
+    equip:['Ancoras','Ar condicionado','Baterias','Boiler','Bomba de água doce','Bomba de porão','Bússola','Cadeira de pesca','Geladeira','Geradores','Microondas','Rádio VHF','TV','Balsa de Sobrevivência Auto Inflável','Capota do fly'],
+    imgs:['grande_carbrasmar41id1319_465.jpg','grande_03a_719.jpg','grande_02a_641.jpg','grande_12a_692.jpg','grande_04a_245.jpg','grande_14_987.jpg','grande_22a_905.jpg','grande_21a_211.jpg','grande_23a_820.jpg','grande_24a_587.jpg','grande_25a_948.jpg','grande_07_63.jpg','grande_08_424.jpg','grande_17_184.jpg','grande_18_163.jpg','grande_19_321.jpg'],
+  },
+  1349: {
+    model:'Magnum 39', brand:'MAGNUM', year:2008, feet:39, nac:'Brasil',
+    mFab:'VOLVO D3', mMod:'VOLVO D3', mComb:'Diesel', mQtd:2, mAno:2008, horas:220,
+    desc:'',
+    equip:['Ancoras','Baterias','Bomba de água doce','Bomba de porão','Bússola','Capota','Carregador de baterias','Defensas','Geladeira','GPS','Guincho de Âncora elétrico','Microondas','Rádio VHF','Solarium de popa','Solarium de proa','Som','Toldo','Tomada de cais','TV','WC Elétrico'],
+    imgs:['grande_1_39.jpg','grande_2_478.jpg','grande_3_1019.jpg','grande_4_909.jpg','grande_5_257.jpg','grande_6_734.jpg','grande_7_934.jpg','grande_8_447.jpg','grande_9_654.jpg','grande_10_610.jpg','grande_11_885.jpg','grande_12_47.jpg','grande_13_795.jpg','grande_14_88.jpg','grande_15_360.jpg','grande_16_750.jpg','grande_17_269.jpg','grande_18_880.jpg','grande_19_719.jpg','grande_20_139.jpg'],
+  },
+  1263: {
+    model:'Intermarine Scarab 38', brand:'INTERMARINE', year:1992, feet:38, nac:'Brasil',
+    mFab:'Volvo Penta', mMod:'KAD 42', mComb:'Diesel', mQtd:2, mAno:1992, horas:250,
+    desc:'',
+    equip:['Ancoras','Bomba de água doce','Bomba de porão','Luzes submersas','Rádio VHF','Strobo light','Baterias','Capota'],
+    imgs:['grande_01_956.jpg','grande_02_974.jpg','grande_03_714.jpg','grande_03a_675.jpg','grande_01a_903.jpg','grande_05_536.jpg','grande_047_683.jpg','grande_06_33.jpg'],
+  },
+};
+
+/* ── Helpers ─────────────────────────────────────── */
+function qs(id) { return document.getElementById(id); }
+
+function buildRegioesOptions() {
+  const estados = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'];
+  return estados.map(e => `<option value="${e}">${e}</option>`).join('');
+}
+
+function buildYearOptions(label) {
+  let opts = `<option value="">${label}</option>`;
+  for (let y = 2025; y >= 1980; y--) opts += `<option value="${y}">${y}</option>`;
+  return opts;
+}
+
+function buildFeetOptions(label) {
+  const sizes = [38,39,41,42,44,46,48,50,51,52,54,56,60,62,68,70,72,74,77,80,83,106];
+  let opts = `<option value="">${label}</option>`;
+  sizes.forEach(s => { opts += `<option value="${s}">${s}</option>`; });
+  return opts;
+}
+
+function buildBrandOptions() {
+  const brands = ['AG CATAMARAN','ATLANTIS','AZIMUT','CARBRASMAR','FERRETTI','GENESIS','GLOBAL','INTERMARINE','ISY','MAGNUM','REAL','SCHAEFER YACHTS','SEGUE'];
+  let opts = `<option value="">Selecione</option>`;
+  brands.forEach(b => { opts += `<option value="${b}">${b}</option>`; });
+  return opts;
+}
+
+/* ── Render ──────────────────────────────────────── */
+function render() {
+  const ref = new URLSearchParams(window.location.search).get('ref');
+  const root = qs('yd-root');
+
+  /* se não tem ref, redireciona para o catálogo */
+  if (!ref) { window.location.replace('/#seminovos'); return; }
+
+  const d = DATA[ref];
+
+  if (!d) {
+    root.innerHTML = `<div class="yd-notfound"><p>Embarcação REF ${ref} não encontrada.</p>
+      <a href="/#seminovos" style="color:var(--gold);font-family:var(--font-sans);text-decoration:none;letter-spacing:.15em">← Voltar ao catálogo</a></div>`;
+    return;
+  }
+
+  document.title = `${d.model} ${d.year} | Yacht Collection`;
+
+  const base = `${B}${ref}/`;
+  const imgs = d.imgs.map(f => base + f);
+  const hp = d.mHP > 0 ? ` — ${d.mHP} HP` : '';
+
+  /* Thumbnails */
+  const thumbsHTML = imgs.length > 1
+    ? imgs.map((src,i) => `<img class="yd-thumb${i===0?' is-active':''}" src="${src}" alt="${d.model} ${i+1}" loading="lazy" data-idx="${i}">`).join('')
+    : '';
+
+  /* Equipment comma list */
+  const equipStr = d.equip.join(';');
+
+  root.innerHTML = `
+    <!-- TOP: image + form -->
+    <div class="yd-top">
+      <div class="yd-main-img-wrap">
+        <img id="yd-main-img" src="${imgs[0]||''}" alt="${d.model}">
+        ${thumbsHTML ? `<div class="yd-thumbs" id="yd-thumbs">${thumbsHTML}</div>` : ''}
+      </div>
+
+      <div class="yd-form-panel">
+        <div class="yd-form-panel__head">MAIS INFORMAÇÕES!</div>
+        <div class="yd-form-body" id="yd-form-body">
+          <input class="yd-input" type="text" id="fi-nome" placeholder="Nome" autocomplete="name">
+          <input class="yd-input" type="email" id="fi-email" placeholder="E-mail" autocomplete="email">
+          <input class="yd-input" type="tel" id="fi-tel" placeholder="Telefone (WhatsApp)" autocomplete="tel">
+          <select class="yd-select" id="fi-regiao">
+            <option value="">Selecione sua região</option>
+            ${buildRegioesOptions()}
+          </select>
+          <input class="yd-input" type="hidden" id="fi-ref" value="REF ${ref} — ${d.model} ${d.year}">
+          <textarea class="yd-textarea" id="fi-msg" placeholder="Mensagem"></textarea>
+          <button class="yd-submit" id="yd-submit-btn">ENVIAR</button>
+          <div class="yd-form-success" id="yd-success">Mensagem enviada! Nossa equipe entrará em contato em breve.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM: specs + sidebar -->
+    <div class="yd-bottom">
+      <div class="yd-specs-col">
+        <a class="yd-back-link" href="/#seminovos">← Voltar</a>
+        <h1 class="yd-model-title">${d.model}</h1>
+
+        <p class="yd-section-label">Especificações</p>
+
+        <p class="yd-sub-label">Descrição</p>
+        <div class="yd-spec-table">
+          <div class="yd-spec-row"><span class="yd-spec-k">Estaleiro</span><span class="yd-spec-v">${d.brand}</span></div>
+          <div class="yd-spec-row"><span class="yd-spec-k">Ano</span><span class="yd-spec-v">${d.year}</span></div>
+          <div class="yd-spec-row"><span class="yd-spec-k">Pés</span><span class="yd-spec-v">${d.feet}</span></div>
+          <div class="yd-spec-row"><span class="yd-spec-k">Nacionalidade</span><span class="yd-spec-v">${d.nac}</span></div>
+          ${d.horas > 0 ? `<div class="yd-spec-row"><span class="yd-spec-k">Horas de Uso</span><span class="yd-spec-v">${d.horas.toLocaleString('pt-BR')} h</span></div>` : ''}
+        </div>
+
+        <p class="yd-sub-label">Motorização</p>
+        <div class="yd-spec-table">
+          <div class="yd-spec-row"><span class="yd-spec-k">Fabricante</span><span class="yd-spec-v">${d.mFab}</span></div>
+          <div class="yd-spec-row"><span class="yd-spec-k">Modelo</span><span class="yd-spec-v">${d.mMod}${hp}</span></div>
+          <div class="yd-spec-row"><span class="yd-spec-k">Combustível</span><span class="yd-spec-v">${d.mComb}</span></div>
+          <div class="yd-spec-row"><span class="yd-spec-k">Quantidade</span><span class="yd-spec-v">${d.mQtd}</span></div>
+          ${d.mAno ? `<div class="yd-spec-row"><span class="yd-spec-k">Ano dos Motores</span><span class="yd-spec-v">${d.mAno}</span></div>` : ''}
+        </div>
+
+        <p class="yd-sub-label">Acessórios e observações</p>
+        <p class="yd-equip-text">${equipStr}</p>
+        ${d.desc ? `<p class="yd-obs-text">${d.desc}</p>` : ''}
+
+        <p class="yd-ref-tag" style="margin-top:3rem;text-align:left">REF ${ref} · Yacht Collection</p>
+      </div>
+
+      <div class="yd-sidebar">
+        <div class="yd-widget">
+          <div class="yd-widget__head">ENCONTRE O SEU BARCO HOJE!</div>
+          <div class="yd-widget__body">
+            <div>
+              <p class="yd-widget-label">Estaleiro</p>
+              <select class="yd-select" id="ws-brand">${buildBrandOptions()}</select>
+            </div>
+            <div class="yd-widget-row">
+              <div>
+                <p class="yd-widget-label">Ano de</p>
+                <select class="yd-select" id="ws-yFrom">${buildYearOptions('Selecione')}</select>
+              </div>
+              <div>
+                <p class="yd-widget-label">Ano até</p>
+                <select class="yd-select" id="ws-yTo">${buildYearOptions('Selecione')}</select>
+              </div>
+            </div>
+            <div class="yd-widget-row">
+              <div>
+                <p class="yd-widget-label">Pés de</p>
+                <select class="yd-select" id="ws-fFrom">${buildFeetOptions('Selecione')}</select>
+              </div>
+              <div>
+                <p class="yd-widget-label">Pés até</p>
+                <select class="yd-select" id="ws-fTo">${buildFeetOptions('Selecione')}</select>
+              </div>
+            </div>
+            <button class="yd-widget-btn" id="ws-btn">ENVIAR</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  /* ── Gallery interaction ─────────────────────── */
+  if (imgs.length > 1) {
+    let cur = 0;
+    const thumbEls = document.querySelectorAll('.yd-thumb');
+    const mainImg  = qs('yd-main-img');
+
+    function goTo(i) {
+      cur = i;
+      mainImg.style.opacity = '0';
+      setTimeout(() => { mainImg.src = imgs[i]; mainImg.style.opacity = '1'; }, 180);
+      thumbEls.forEach((t,j) => t.classList.toggle('is-active', j===i));
+      thumbEls[i].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+    }
+
+    thumbEls.forEach((t,i) => t.addEventListener('click', () => goTo(i)));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goTo((cur+1) % imgs.length);
+      if (e.key === 'ArrowLeft')  goTo((cur-1+imgs.length) % imgs.length);
+    });
+  }
+
+  /* ── Contact form ────────────────────────────── */
+  qs('yd-submit-btn').addEventListener('click', () => {
+    const nome   = qs('fi-nome').value.trim();
+    const email  = qs('fi-email').value.trim();
+    const tel    = qs('fi-tel').value.trim();
+    if (!nome || !email || !tel) {
+      alert('Por favor, preencha Nome, E-mail e Telefone.');
+      return;
+    }
+    /* In production: replace with real form submission */
+    const mailto = `mailto:vip@yachtcollection.com.br?subject=Interesse - ${encodeURIComponent(d.model+' '+d.year+' REF '+ref)}&body=${encodeURIComponent('Nome: '+nome+'\nE-mail: '+email+'\nTelefone: '+tel+'\nMensagem: '+qs('fi-msg').value)}`;
+    window.location.href = mailto;
+    qs('yd-success').style.display = 'block';
+    qs('yd-submit-btn').style.display = 'none';
+  });
+
+  /* ── Widget search ───────────────────────────── */
+  qs('ws-btn').addEventListener('click', () => {
+    const brand = qs('ws-brand').value;
+    const fFrom = qs('ws-fFrom').value;
+    const yFrom = qs('ws-yFrom').value;
+    let url = '/#seminovos';
+    const params = [];
+    if (brand) params.push('brand=' + encodeURIComponent(brand));
+    if (fFrom) params.push('feetMin=' + fFrom);
+    if (yFrom) params.push('yearMin=' + yFrom);
+    window.location.href = params.length ? `/?${params.join('&')}#seminovos` : url;
+  });
+}
+
+render();
+</script>
+</body>
+</html>

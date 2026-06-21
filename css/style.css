@@ -55,6 +55,11 @@ a:hover { color: var(--white); }
   justify-content: space-between;
   pointer-events: none;
   mix-blend-mode: normal;
+  transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.frame.nav--hidden {
+  transform: translateY(-110%);
 }
 
 .frame__brand {
@@ -337,13 +342,1310 @@ a:hover { color: var(--white); }
   transition: width 0.05s linear;
 }
 
+/* ─── Nav Dropdown ───────────────────────────── */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown__toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--white-60);
+  padding: 0;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.nav-dropdown__toggle:hover { color: var(--white); }
+
+.nav-dropdown__arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+  font-size: 0.85em;
+}
+.nav-dropdown__toggle[aria-expanded="true"] .nav-dropdown__arrow {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 1.2rem);
+  left: 50%;
+  transform: translateX(-50%);
+  list-style: none;
+  background: rgba(8, 24, 48, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--gold);
+  min-width: 200px;
+  padding: 0.8rem 0;
+  display: none;
+  flex-direction: column;
+}
+.nav-dropdown__menu.is-open {
+  display: flex;
+}
+
+.nav-dropdown__menu li a {
+  display: block;
+  padding: 0.8rem 1.6rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--white-60);
+  white-space: nowrap;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.nav-dropdown__menu li a:hover {
+  color: var(--white);
+  background: rgba(200, 169, 110, 0.08);
+}
+
+/* ─── Seção Branca / A Empresa ───────────────── */
+.section-white {
+  background: #ffffff;
+  color: var(--navy);
+  padding-bottom: 72px;
+}
+
+.empresa-hero {
+  padding: 14vh 6vw 8vh;
+  border-bottom: 1px solid rgba(10, 22, 40, 0.1);
+}
+
+.empresa-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.empresa-title {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 7vw, 11rem);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+
+.empresa-title em {
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.empresa-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.empresa-intro {
+  padding: 6vw;
+  border-right: 1px solid rgba(10, 22, 40, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.empresa-subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 2.2vw, 3.2rem);
+  font-weight: 300;
+  color: var(--navy);
+}
+
+.empresa-intro p {
+  font-family: var(--font-sans);
+  font-size: clamp(1.2rem, 1vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(10, 22, 40, 0.7);
+}
+
+.empresa-closing {
+  font-family: var(--font-serif) !important;
+  font-style: italic;
+  font-size: clamp(1.4rem, 1.3vw, 2rem) !important;
+  color: var(--navy) !important;
+  opacity: 0.85;
+  border-left: 2px solid var(--gold);
+  padding-left: 1.6rem;
+}
+
+.empresa-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pilar {
+  padding: 4vw 3vw;
+  border-bottom: 1px solid rgba(10, 22, 40, 0.1);
+  border-right: 1px solid rgba(10, 22, 40, 0.1);
+}
+
+.pilar__title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.6rem;
+}
+
+.pilar__text {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 0.9vw, 1.4rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(10, 22, 40, 0.65);
+}
+
+@media screen and (max-width: 768px) {
+  .empresa-body { grid-template-columns: 1fr; }
+  .empresa-intro { border-right: none; border-bottom: 1px solid rgba(10,22,40,0.1); }
+  .empresa-pillars { grid-template-columns: 1fr; }
+}
+
+.frame__logo {
+  height: clamp(24px, 2.4vw, 38px);
+  width: auto;
+  pointer-events: auto;
+}
+
+/* ─── AG Catamaran ───────────────────────────── */
+.section-ag {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.ag-hero {
+  padding: 12vh 6vw 8vh;
+  border-bottom: 1px solid var(--white-20);
+  max-width: 900px;
+}
+
+.ag-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.ag-title {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 7vw, 11rem);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 3rem;
+}
+
+.ag-title em {
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.ag-lead {
+  font-family: var(--font-sans);
+  font-size: clamp(1.2rem, 1.1vw, 1.6rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--white-60);
+  max-width: 70ch;
+}
+
+.ag-body {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  border-bottom: 1px solid var(--white-20);
+}
+
+.ag-features,
+.ag-specs,
+.ag-about {
+  padding: 5vw 4vw;
+}
+
+.ag-features { border-right: 1px solid var(--white-20); }
+.ag-specs    { border-right: 1px solid var(--white-20); }
+
+.ag-section-label {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.4rem;
+}
+
+.ag-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.ag-list li {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 0.9vw, 1.4rem);
+  font-weight: 300;
+  color: var(--white-60);
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+.ag-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.ag-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ag-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--white-20);
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 0.85vw, 1.3rem);
+  font-weight: 300;
+}
+
+.ag-row dt { color: var(--white-60); }
+.ag-row dd { color: var(--white); text-align: right; }
+
+.ag-about p {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 0.9vw, 1.4rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--white-60);
+}
+
+/* ─── AG Gallery ─────────────────────────────── */
+.ag-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ag-gallery__banner {
+  width: 100%;
+  height: clamp(300px, 45vw, 620px);
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.ag-gallery__row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.ag-gallery__row img {
+  width: 100%;
+  height: clamp(140px, 14vw, 220px);
+  object-fit: cover;
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .ag-gallery__banner { height: 54vw; }
+  .ag-gallery__row    { grid-template-columns: 1fr 1fr; }
+  .ag-gallery__row img { height: 44vw; }
+}
+
+/* ─── Newsletter ──────────────────────────────── */
+.section-newsletter {
+  background: var(--navy-mid);
+  padding: 8vh 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.newsletter-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+.newsletter-label {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3vw, 3.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.newsletter-form {
+  display: flex;
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.newsletter-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 1.1em 1.4em;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--white);
+}
+
+.newsletter-input::placeholder { color: var(--white-60); }
+
+.newsletter-btn {
+  background: var(--gold);
+  border: none;
+  padding: 0 2.2em;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--navy);
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.newsletter-btn:hover { background: var(--cream); }
+
+@media screen and (max-width: 768px) {
+  .newsletter-form { flex-direction: column; }
+  .newsletter-btn  { padding: 1em; }
+}
+
+/* (removido: ag-contact) */
+.ag-contact {
+  display: flex;
+  align-items: center;
+  gap: 4vw;
+  padding: 4vw 6vw;
+  flex-wrap: wrap;
+}
+
+.ag-contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ag-contact-label {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.ag-contact-item a {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 0.9vw, 1.4rem);
+  font-weight: 300;
+  color: var(--white-60);
+  transition: color 0.2s ease;
+}
+.ag-contact-item a:hover { color: var(--white); }
+
+.ag-whatsapp {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy) !important;
+  background: #25d366;
+  padding: 1em 2em;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+.ag-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); }
+.ag-whatsapp svg { width: 18px; height: 18px; }
+
+@media screen and (max-width: 768px) {
+  .ag-body { grid-template-columns: 1fr; }
+  .ag-features,
+  .ag-specs { border-right: none; border-bottom: 1px solid var(--white-20); }
+  .ag-whatsapp { margin-left: 0; width: 100%; justify-content: center; }
+}
+
+/* ─── Seminovos — Card de Busca e Resultados ─── */
+.section-seminovos {
+  background: var(--navy-mid);
+  padding: 0 6vw 8vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5vw;
+}
+
+.seminovos-card {
+  width: 100%;
+  max-width: 1400px;
+  background: var(--ocean);
+  border: 1px solid rgba(200, 169, 110, 0.25);
+  padding: 4rem 4vw;
+  margin-top: -72px;
+  position: relative;
+  z-index: 2;
+}
+
+.seminovos-card__title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.2rem, 1.5vw, 1.8rem);
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+}
+
+.seminovos-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-width: 160px;
+}
+
+.filter-group--grow { flex: 1; min-width: 220px; }
+
+.filter-group--ref { min-width: 110px; max-width: 130px; }
+
+.filter-label {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white-60);
+}
+
+.filter-select,
+.filter-input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  padding: 0.9em 1.2em;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.25s ease;
+  width: 100%;
+}
+
+.filter-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8a96e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.2em center;
+  padding-right: 2.8em;
+  cursor: pointer;
+}
+
+.filter-select option { background: var(--navy-mid); color: var(--white); }
+
+.filter-select:focus,
+.filter-input:focus { border-color: var(--gold); }
+
+.filter-input--number::-webkit-inner-spin-button,
+.filter-input--number::-webkit-outer-spin-button { opacity: 1; }
+
+.filter-search {
+  background: var(--gold);
+  border: none;
+  color: var(--navy);
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
+  align-self: flex-end;
+}
+
+.filter-search:hover { background: var(--cream); transform: scale(1.05); }
+
+.filter-search svg { width: 20px; height: 20px; }
+
+/* ─── Seminovos — Resultados ─────────────────── */
+.seminovos-results {
+  width: 100%;
+  max-width: 1400px;
+}
+
+.yacht-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  background: rgba(200, 169, 110, 0.12);
+  border: 1px solid rgba(200, 169, 110, 0.12);
+}
+
+.seminovos-count {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.4rem;
+  opacity: 0.8;
+}
+
+.yacht-card {
+  background: var(--ocean);
+  display: flex;
+  flex-direction: column;
+  transition: background 0.25s ease;
+}
+
+.yacht-card:hover { background: rgba(10, 22, 40, 0.9); }
+
+.yacht-card__img-wrap {
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--navy);
+}
+
+.yacht-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.yacht-card:hover .yacht-card__img { transform: scale(1.04); }
+
+.yacht-card__body {
+  padding: 2rem 2rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.8rem;
+}
+
+.yacht-card__brand {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.yacht-card__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 1.6vw, 2.2rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.yacht-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--white-60);
+  font-weight: 300;
+}
+
+.yacht-card__meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.yacht-card__meta span::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+
+.yacht-card__meta span:first-child::before { display: none; }
+
+.yacht-card__engines {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--white-60);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.yacht-card__ref {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+}
+
+.yacht-card__cta {
+  display: inline-block;
+  margin-top: 1.2rem;
+  padding: 0.7em 1.6em;
+  border: 1px solid rgba(200, 169, 110, 0.4);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  align-self: flex-start;
+}
+
+.yacht-card__cta:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+.seminovos-empty {
+  text-align: center;
+  padding: 6rem 2rem;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--white-60);
+}
+
+/* ─── Hamburguer ─────────────────────────────── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  pointer-events: auto;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--white);
+  transition: transform 0.35s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+
+/* ─── Mobile Menu Overlay ────────────────────── */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+  pointer-events: none;
+}
+
+.mobile-menu.is-open {
+  clip-path: inset(0 0 0% 0);
+  pointer-events: auto;
+}
+
+.mobile-menu__close {
+  position: absolute;
+  top: var(--pad);
+  right: var(--pad);
+  background: none;
+  border: none;
+  color: var(--white-60);
+  font-size: 2.2rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+.mobile-menu__close:hover { color: var(--white); }
+
+.mobile-menu__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.8rem;
+}
+
+.mobile-menu__nav a {
+  font-family: var(--font-sans);
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  letter-spacing: 0.2em;
+  color: var(--white-60);
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+.mobile-menu__nav a:hover { color: var(--white); }
+
 /* ─── Responsive ─────────────────────────────── */
+/* ─── Charter Caribe ─────────────────────────── */
+.section-charter-caribe {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.cc-banner {
+  position: relative;
+  height: clamp(300px, 45vw, 580px);
+  overflow: hidden;
+}
+
+.cc-banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.cc-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(10,22,40,0.85) 40%, rgba(10,22,40,0.2));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6vw;
+}
+
+.cc-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+}
+
+.cc-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3.2rem, 5.5vw, 8rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 3rem;
+}
+
+.cc-title em { font-style: italic; opacity: 0.6; }
+
+.cc-cta {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy) !important;
+  background: var(--gold);
+  padding: 1em 2.4em;
+  transition: background 0.25s ease;
+}
+.cc-cta:hover { background: var(--cream); }
+
+.cc-body {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  border-top: 1px solid var(--white-20);
+}
+
+.cc-intro {
+  padding: 5vw 4vw;
+  border-right: 1px solid var(--white-20);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.cc-intro > p {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 0.9vw, 1.4rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--white-60);
+}
+
+.cc-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.cc-contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cc-contact-label {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.cc-contact-item a,
+.cc-contact-email,
+.cc-contact-phone {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 0.9vw, 1.4rem);
+  font-weight: 300;
+  color: var(--white-60);
+  transition: color 0.2s;
+}
+.cc-contact-item a:hover,
+.cc-contact-email:hover,
+.cc-contact-phone:hover { color: var(--white); }
+
+.cc-whatsapp, .ce-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy) !important;
+  background: #25d366;
+  padding: 0.9em 1.8em;
+  transition: background 0.25s ease;
+  width: fit-content;
+  margin-top: 0.4rem;
+}
+.cc-whatsapp:hover, .ce-whatsapp:hover { background: #1ebe5d; }
+.cc-whatsapp svg, .ce-whatsapp svg { width: 18px; height: 18px; }
+
+.cc-yachts { padding: 5vw 4vw; }
+
+.cc-yachts-title {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.4rem;
+}
+
+.cc-yachts-grid, .ce-yachts-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.cc-yachts-grid li, .ce-yachts-grid li {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 0.85vw, 1.3rem);
+  font-weight: 300;
+  color: var(--white-60);
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--white-20);
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.cc-yachts-grid li::before, .ce-yachts-grid li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.4rem;
+  width: 5px;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* ─── Charter Europa ─────────────────────────── */
+.section-charter-europa {
+  background: var(--navy-mid);
+  color: var(--white);
+}
+
+.ce-banner {
+  position: relative;
+  height: clamp(300px, 45vw, 580px);
+  overflow: hidden;
+}
+
+.ce-banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.ce-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(10,22,40,0.85) 40%, rgba(10,22,40,0.2));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6vw;
+}
+
+.ce-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+}
+
+.ce-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3.2rem, 5.5vw, 8rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 3rem;
+}
+
+.ce-title em { font-style: italic; opacity: 0.6; }
+
+.ce-body {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  border-top: 1px solid var(--white-20);
+}
+
+.ce-yachts {
+  padding: 5vw 4vw;
+  border-right: 1px solid var(--white-20);
+}
+
+/* ─── Yacht Hover Preview ────────────────────── */
+.cc-yachts-grid li,
+.ce-yachts-grid li {
+  position: relative;
+  cursor: default;
+}
+
+.yacht-preview {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  width: 300px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  background: var(--navy);
+  display: block;
+}
+
+.cc-yachts-grid li:hover .yacht-preview,
+.ce-yachts-grid li:hover .yacht-preview {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.cc-yachts-grid,
+.ce-yachts-grid {
+  overflow: visible;
+}
+
+/* ─── Contato ────────────────────────────────── */
+.section-contato {
+  background: var(--white);
+  color: var(--navy);
+}
+
+.contato-header {
+  padding: 10vh 6vw 6vh;
+  border-bottom: 1px solid rgba(10,22,40,0.1);
+}
+
+.contato-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.contato-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3.6rem, 6vw, 9rem);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+
+.contato-title em { font-style: italic; opacity: 0.45; }
+
+.contato-body {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.contato-info {
+  padding: 5vw 4vw;
+  border-right: 1px solid rgba(10,22,40,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.contato-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contato-label {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.contato-item a {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 0.9vw, 1.4rem);
+  font-weight: 300;
+  color: rgba(10,22,40,0.65);
+  transition: color 0.2s;
+}
+.contato-item a:hover { color: var(--navy); }
+
+.contato-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy) !important;
+  background: #25d366;
+  padding: 0.9em 1.8em;
+  transition: background 0.25s ease;
+  width: fit-content;
+}
+.contato-whatsapp:hover { background: #1ebe5d; }
+.contato-whatsapp svg { width: 18px; height: 18px; }
+
+.contato-form {
+  padding: 5vw 4vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contato-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.form-label {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(10,22,40,0.5);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(10,22,40,0.2);
+  padding: 0.8em 0;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.25s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  resize: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus { border-color: var(--gold); }
+
+.form-input::placeholder,
+.form-textarea::placeholder { color: rgba(10,22,40,0.3); }
+
+.form-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8a96e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.4em center; }
+
+.form-submit {
+  align-self: flex-start;
+  background: var(--navy);
+  border: none;
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 1.2em 3em;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+.form-submit:hover { background: var(--ocean); transform: translateY(-2px); }
+
+/* ─── Footer ─────────────────────────────────── */
+.site-footer {
+  background: var(--navy);
+  border-top: 1px solid var(--white-20);
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4vw 6vw;
+  flex-wrap: wrap;
+  gap: 2.4rem;
+  border-bottom: 1px solid var(--white-20);
+}
+
+.footer-logo {
+  height: clamp(28px, 2.5vw, 40px);
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.footer-nav {
+  display: flex;
+  gap: 2.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-nav a {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--white-60);
+  transition: color 0.2s;
+}
+.footer-nav a:hover { color: var(--white); }
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: var(--white-60);
+  transition: color 0.2s;
+}
+.footer-social a:hover { color: var(--white); }
+.footer-social svg { width: 18px; height: 18px; }
+
+.footer-bottom {
+  padding: 2rem 6vw;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.05em;
+}
+
+/* ─── Responsivo geral ───────────────────────── */
 @media screen and (max-width: 768px) {
   .frame__nav { display: none; }
+  .hamburger  { display: flex; }
 
-  .txt__title {
-    font-size: clamp(4rem, 12vw, 7rem);
-  }
+  .txt__title { font-size: clamp(4rem, 12vw, 7rem); }
+  .txt__desc  { max-width: 100%; width: 90%; }
 
-  .txt__desc { max-width: 100%; width: 90%; }
+  .empresa-body    { grid-template-columns: 1fr; }
+  .empresa-intro   { border-right: none; border-bottom: 1px solid rgba(10,22,40,0.1); }
+  .empresa-pillars { grid-template-columns: 1fr; }
+
+  .seminovos-filters { flex-direction: column; }
+  .filter-group,
+  .filter-group--grow,
+  .filter-group--ref { min-width: 100%; max-width: 100%; }
+  .filter-search { width: 100%; height: 48px; }
+  .yacht-grid { grid-template-columns: 1fr; }
+
+  .cc-body         { grid-template-columns: 1fr; }
+  .cc-intro        { border-right: none; border-bottom: 1px solid var(--white-20); }
+  .cc-yachts-grid  { grid-template-columns: 1fr 1fr; }
+
+  .ce-body { grid-template-columns: 1fr; }
+  .ce-yachts { border-right: none; border-bottom: 1px solid var(--white-20); }
+
+  .contato-body    { grid-template-columns: 1fr; }
+  .contato-info    { border-right: none; border-bottom: 1px solid rgba(10,22,40,0.1); }
+  .contato-form-row { grid-template-columns: 1fr; }
+
+  .footer-top { flex-direction: column; align-items: flex-start; }
+  .footer-nav { flex-direction: column; gap: 1.2rem; }
 }
