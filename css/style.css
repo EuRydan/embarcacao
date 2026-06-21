@@ -1616,36 +1616,126 @@ a:hover { color: var(--white); }
   letter-spacing: 0.05em;
 }
 
-/* ─── Responsivo geral ───────────────────────── */
+/* ─── Tablet 769 – 1080px ────────────────────── */
+@media screen and (min-width: 769px) and (max-width: 1080px) {
+  .frame__nav { gap: 1.4rem; font-size: 1rem; }
+
+  .ag-body { grid-template-columns: 1fr 1fr; }
+  .ag-about {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--white-20);
+    border-right: none;
+  }
+  .ag-specs { border-right: none; }
+
+  .cc-banner, .ce-banner { height: clamp(260px, 36vw, 480px); }
+  .cc-title, .ce-title   { font-size: clamp(2.8rem, 5vw, 6rem); }
+
+  .contato-body { grid-template-columns: 1fr 1.5fr; }
+}
+
+/* ─── Mobile ≤ 768px ─────────────────────────── */
 @media screen and (max-width: 768px) {
+
+  /* Base */
+  html  { font-size: 14px; }
+  :root { --pad: 5vw; }
+
+  /* ── Frame ───────────────────────────────────── */
   .frame__nav { display: none; }
   .hamburger  { display: flex; }
 
-  .txt__title { font-size: clamp(4rem, 12vw, 7rem); }
-  .txt__desc  { max-width: 100%; width: 90%; }
+  /* ── Hero intro ──────────────────────────────── */
+  .spacer--intro { padding-left: var(--pad); }
+  .intro-title   { font-size: clamp(2.6rem, 11vw, 4.5rem); line-height: 0.92; }
 
+  /* ── Stage text cards ────────────────────────── */
+  .txt { padding: var(--pad); padding-bottom: 14vh; }
+  .txt__card {
+    max-width: calc(100vw - calc(2 * var(--pad)));
+    padding: 1.8rem 1.8rem 1.8rem 1.4rem;
+  }
+  .txt__title { font-size: clamp(2.6rem, 11vw, 5rem); }
+  .txt__desc  { max-width: 100%; width: 100%; font-size: 1.1rem; }
+
+  /* ── A Empresa ───────────────────────────────── */
+  .empresa-hero    { padding: 10vh var(--pad) 6vh; }
+  .empresa-title   { font-size: clamp(2.6rem, 11vw, 5rem); line-height: 0.92; }
   .empresa-body    { grid-template-columns: 1fr; }
-  .empresa-intro   { border-right: none; border-bottom: 1px solid rgba(10,22,40,0.1); }
+  .empresa-intro   { padding: 6vw var(--pad); border-right: none; border-bottom: 1px solid rgba(10,22,40,0.1); }
   .empresa-pillars { grid-template-columns: 1fr; }
+  .pilar           { border-right: none; padding: 5vw var(--pad); }
 
-  .seminovos-filters { flex-direction: column; }
+  /* ── AG Catamaran ────────────────────────────── */
+  .ag-hero             { padding: 10vh var(--pad) 6vh; }
+  .ag-title            { font-size: clamp(2.6rem, 11vw, 5rem); line-height: 0.92; }
+  .ag-gallery__banner  { height: 56vw; }
+  .ag-gallery__row     { grid-template-columns: 1fr 1fr; }
+  .ag-gallery__row img { height: 46vw; }
+  .ag-body             { grid-template-columns: 1fr; }
+  .ag-features,
+  .ag-specs            { border-right: none; border-bottom: 1px solid var(--white-20); }
+  .ag-features,
+  .ag-specs,
+  .ag-about            { padding: 6vw var(--pad); }
+
+  /* ── Newsletter ──────────────────────────────── */
+  .newsletter-form { flex-direction: column; }
+  .newsletter-btn  { padding: 1em; }
+
+  /* ── Seminovos ───────────────────────────────── */
+  .seminovos-card    { padding: 3rem var(--pad); margin-top: 0; }
+  .seminovos-filters { flex-direction: column; gap: 1.2rem; }
   .filter-group,
   .filter-group--grow,
-  .filter-group--ref { min-width: 100%; max-width: 100%; }
-  .filter-search { width: 100%; height: 48px; }
-  .yacht-grid { grid-template-columns: 1fr; }
+  .filter-group--ref  { min-width: 100%; max-width: 100%; flex: none; }
+  .filter-search      { width: 100%; height: 48px; }
+  .yacht-grid         { grid-template-columns: 1fr; }
 
-  .cc-body         { grid-template-columns: 1fr; }
-  .cc-intro        { border-right: none; border-bottom: 1px solid var(--white-20); }
-  .cc-yachts-grid  { grid-template-columns: 1fr 1fr; }
+  /* ── Charter Caribe ──────────────────────────── */
+  .cc-banner { height: clamp(300px, 68vw, 480px); }
+  .cc-banner__overlay {
+    background: linear-gradient(to bottom, rgba(10,22,40,0.08) 0%, rgba(10,22,40,0.92) 62%);
+    justify-content: flex-end;
+    padding: 0 var(--pad) calc(var(--pad) * 1.6);
+  }
+  .cc-title  { font-size: clamp(2.2rem, 9vw, 3.6rem); margin-bottom: 1.8rem; }
+  .cc-body   { grid-template-columns: 1fr; }
+  .cc-intro  { border-right: none; border-bottom: 1px solid var(--white-20); padding: 6vw var(--pad); }
+  .cc-yachts { padding: 6vw var(--pad); }
+  .cc-yachts-grid { grid-template-columns: 1fr 1fr; }
+  .yacht-preview  { display: none; }
 
-  .ce-body { grid-template-columns: 1fr; }
-  .ce-yachts { border-right: none; border-bottom: 1px solid var(--white-20); }
+  /* ── Charter Europa ──────────────────────────── */
+  .ce-banner { height: clamp(300px, 68vw, 480px); }
+  .ce-banner__overlay {
+    background: linear-gradient(to bottom, rgba(10,22,40,0.08) 0%, rgba(10,22,40,0.92) 62%);
+    justify-content: flex-end;
+    padding: 0 var(--pad) calc(var(--pad) * 1.6);
+  }
+  .ce-title       { font-size: clamp(2.2rem, 9vw, 3.6rem); margin-bottom: 1.8rem; }
+  .ce-body        { grid-template-columns: 1fr; }
+  .ce-yachts      { border-right: none; border-bottom: 1px solid var(--white-20); padding: 6vw var(--pad); }
+  .ce-yachts-grid { grid-template-columns: 1fr 1fr; }
 
-  .contato-body    { grid-template-columns: 1fr; }
-  .contato-info    { border-right: none; border-bottom: 1px solid rgba(10,22,40,0.1); }
+  /* ── Contato ─────────────────────────────────── */
+  .contato-header   { padding: 8vh var(--pad) 5vh; }
+  .contato-title    { font-size: clamp(2.6rem, 11vw, 5rem); line-height: 0.92; }
+  .contato-body     { grid-template-columns: 1fr; }
+  .contato-info     { padding: 6vw var(--pad); border-right: none; border-bottom: 1px solid rgba(10,22,40,0.1); }
+  .contato-form     { padding: 6vw var(--pad); }
   .contato-form-row { grid-template-columns: 1fr; }
+  .form-submit      { align-self: stretch; text-align: center; }
 
+  /* ── Footer ──────────────────────────────────── */
   .footer-top { flex-direction: column; align-items: flex-start; }
   .footer-nav { flex-direction: column; gap: 1.2rem; }
+
+  /* ── iOS: previne zoom em inputs (precisa ≥ 16px) */
+  .filter-select,
+  .filter-input,
+  .form-input,
+  .form-select,
+  .form-textarea,
+  .newsletter-input { font-size: 16px; }
 }

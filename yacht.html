@@ -270,11 +270,25 @@
 
     /* ── Responsive ────────────────────────────── */
     @media (max-width: 900px) {
+      .yd-topbar  { padding: 0 4vw; gap: 1rem; }
       .yd-top, .yd-bottom { grid-template-columns: 1fr; }
-      .yd-form-panel { border-left: none; border-top: 1px solid var(--white-10); }
-      .yd-specs-col { border-right: none; padding: 3rem 5vw 2rem; }
-      .yd-sidebar { position: static; padding: 0 5vw 4rem; }
-      .yd-thumb { width: 78px; height: 52px; }
+      .yd-form-panel  { border-left: none; border-top: 1px solid var(--white-10); }
+      .yd-specs-col   { border-right: none; padding: 3rem 5vw 2rem; }
+      .yd-sidebar     { position: static; padding: 0 5vw 4rem; }
+      .yd-thumb       { width: 80px; height: 54px; }
+      .yd-form-body   { padding: 1.4rem 1.4rem 1.6rem; }
+      .yd-model-title { font-size: clamp(2rem, 9vw, 3.6rem); }
+
+      /* iOS: previne zoom em inputs */
+      .yd-input,
+      .yd-select,
+      .yd-textarea    { font-size: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .yd-widget-row { grid-template-columns: 1fr; }
+      .yd-thumb      { width: 64px; height: 44px; }
+      .yd-topbar__back span { display: none; }
     }
   </style>
 </head>
