@@ -15,8 +15,9 @@ const lenis = new Lenis({
 });
 
 const _navFrame = document.querySelector('.frame');
+
+/* Nav hide via Lenis (desktop smooth scroll) */
 lenis.on('scroll', ({ scroll, direction }) => {
-  ScrollTrigger.update();
   if (!_navFrame) return;
   if (scroll < 80) {
     _navFrame.classList.remove('nav--hidden');
@@ -26,7 +27,29 @@ lenis.on('scroll', ({ scroll, direction }) => {
     _navFrame.classList.remove('nav--hidden');
   }
 });
-gsap.ticker.add((time) => lenis.raf(time * 1000));
+
+/* Nav hide via native scroll (mobile touch) + always-on ScrollTrigger update */
+if (isTouch) {
+  let _lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (!_navFrame) return;
+    if (y < 80) {
+      _navFrame.classList.remove('nav--hidden');
+    } else if (y > _lastY) {
+      _navFrame.classList.add('nav--hidden');
+    } else {
+      _navFrame.classList.remove('nav--hidden');
+    }
+    _lastY = y;
+  }, { passive: true });
+}
+
+/* ScrollTrigger update in the ticker so it works on both Lenis and native scroll */
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000);
+  ScrollTrigger.update();
+});
 gsap.ticker.lagSmoothing(0);
 
 /* ── Constantes ───────────────────────────────────────────────── */
@@ -392,6 +415,11 @@ renderSeminovos(YACHTS);
 
 /* ── Scroll entrance animations ────────────────────────────── */
 ;(function () {
+  /* On touch devices: ScrollTrigger + native scroll don't sync reliably enough
+     to guarantee opacity:0 elements get revealed. Skip all entrance animations
+     so content is always visible on mobile. */
+  if (isTouch) return;
+
   /* Animates each matching element independently as it enters viewport */
   function rv(sel, fromVars, dur, triggerSel) {
     gsap.utils.toArray(sel).forEach((el) => {
