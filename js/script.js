@@ -16,6 +16,9 @@ const lenis = new Lenis({
 
 const _navFrame = document.querySelector('.frame');
 
+/* ScrollTrigger sync — deve estar dentro do evento Lenis para o scrub funcionar */
+lenis.on('scroll', ScrollTrigger.update);
+
 /* Nav hide via Lenis (desktop smooth scroll) */
 lenis.on('scroll', ({ scroll, direction }) => {
   if (!_navFrame) return;
@@ -28,7 +31,7 @@ lenis.on('scroll', ({ scroll, direction }) => {
   }
 });
 
-/* Nav hide via native scroll (mobile touch) + always-on ScrollTrigger update */
+/* Nav hide via native scroll (mobile touch) */
 if (isTouch) {
   let _lastY = 0;
   window.addEventListener('scroll', () => {
@@ -45,11 +48,7 @@ if (isTouch) {
   }, { passive: true });
 }
 
-/* ScrollTrigger update in the ticker so it works on both Lenis and native scroll */
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-  ScrollTrigger.update();
-});
+gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 
 /* ── Constantes ───────────────────────────────────────────────── */
@@ -154,17 +153,6 @@ function runMobileSlideshow() {
   const DURATION  = 4000; // ms por slide
   let cur = -1;
 
-  /* Abre os blinds do layer idx instantaneamente (sem animação) */
-  function openBlindsInstant(idx) {
-    const bs = blindsSets[idx];
-    if (!bs) return;
-    bs.forEach((b) => {
-      b.top.setAttribute('height', b.h + 0.01);
-      b.top.setAttribute('y',      b.y - b.h);
-      b.bottom.setAttribute('height', b.h + 0.01);
-    });
-  }
-
   function showSlide(idx) {
     const prev = cur;
     cur = idx;
@@ -179,14 +167,23 @@ function runMobileSlideshow() {
       }
     }
 
-    /* Abre blinds do slide atual (instantâneo) e faz fade-in da imagem */
-    openBlindsInstant(idx);
+    /* Reset dos blinds do slide atual para fechado (permite re-animação no ciclo) */
+    const bs = blindsSets[idx];
+    if (bs) {
+      bs.forEach((b) => {
+        gsap.set(b.top,    { attr: { height: 0, y: b.y } });
+        gsap.set(b.bottom, { attr: { height: 0 } });
+      });
+    }
+
+    /* Abre blinds rapidamente (efeito real, 4× mais rápido que desktop) + fade-in */
+    if (bs) openBlinds(bs).timeScale(4);
     gsap.fromTo(imgLayers[idx] || {}, { opacity: 0 },
-      { opacity: 1, duration: 0.7, ease: 'power2.out', delay: prev < 0 ? 0.05 : 0.25 });
+      { opacity: 1, duration: 0.5, ease: 'power2.out', delay: prev < 0 ? 0.05 : 0.2 });
 
     /* Entra o texto */
     if (texts[idx]) {
-      const delay = prev < 0 ? 0.15 : 0.4;
+      const delay = prev < 0 ? 0.2 : 0.35;
       gsap.fromTo(texts[idx],
         { clipPath: 'inset(100% 0% 0% 0%)', y: 40 },
         { clipPath: 'inset(0% 0% 0% 0%)', y: 0, duration: 0.9, ease: 'expo.out', delay });
