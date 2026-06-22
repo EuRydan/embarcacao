@@ -7,7 +7,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 /* ── Lenis smooth scroll ──────────────────────────────────────── */
-const isTouch = window.matchMedia('(pointer: coarse)').matches;
+const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const lenis = new Lenis({
   lerp: 0.15,
   smoothWheel: true,
@@ -138,79 +138,7 @@ function setupLayout() {
 
 function updateLayout() {
   setupLayout();
-  if (!isTouch) buildMasterTimeline();
-}
-
-/* ── Slideshow automático para mobile ────────────────────────── */
-let _slideshowTimer = null;
-
-function runMobileSlideshow() {
-  if (_slideshowTimer) { clearInterval(_slideshowTimer); _slideshowTimer = null; }
-
-  const imgLayers = Array.from(document.querySelectorAll('.layer')); // as 3 SVG layers (video tem classe video-bg)
-  const texts     = gsap.utils.toArray('.txt');
-  const fills     = gsap.utils.toArray('.progress-bar .fill');
-  const DURATION  = 4000; // ms por slide
-  let cur = -1;
-
-  function showSlide(idx) {
-    const prev = cur;
-    cur = idx;
-
-    /* Sai o slide anterior */
-    if (prev >= 0) {
-      gsap.to(imgLayers[prev] || {}, { opacity: 0, duration: 0.55, ease: 'power2.inOut' });
-      if (texts[prev]) {
-        gsap.to(texts[prev], { clipPath: 'inset(0% 0% 100% 0%)', y: -20, duration: 0.45, ease: 'power2.in' });
-        const c = texts[prev].querySelector('.txt__card');
-        if (c) gsap.to(c, { x: -60, duration: 0.35, ease: 'power2.in' });
-      }
-    }
-
-    /* Reset dos blinds do slide atual para fechado (permite re-animação no ciclo) */
-    const bs = blindsSets[idx];
-    if (bs) {
-      bs.forEach((b) => {
-        gsap.set(b.top,    { attr: { height: 0, y: b.y } });
-        gsap.set(b.bottom, { attr: { height: 0 } });
-      });
-    }
-
-    /* Abre blinds rapidamente (efeito real, 4× mais rápido que desktop) + fade-in */
-    if (bs) openBlinds(bs).timeScale(4);
-    gsap.fromTo(imgLayers[idx] || {}, { opacity: 0 },
-      { opacity: 1, duration: 0.5, ease: 'power2.out', delay: prev < 0 ? 0.05 : 0.2 });
-
-    /* Entra o texto */
-    if (texts[idx]) {
-      const delay = prev < 0 ? 0.2 : 0.35;
-      gsap.fromTo(texts[idx],
-        { clipPath: 'inset(100% 0% 0% 0%)', y: 40 },
-        { clipPath: 'inset(0% 0% 0% 0%)', y: 0, duration: 0.9, ease: 'expo.out', delay });
-      const c = texts[idx].querySelector('.txt__card');
-      if (c) gsap.fromTo(c, { x: -80 }, { x: 0, duration: 0.9, ease: 'expo.out', delay: delay + 0.1 });
-    }
-
-    /* Progresso */
-    fills.forEach((fill, i) => {
-      if (i === idx) {
-        gsap.fromTo(fill, { width: '0%' }, { width: '100%', duration: DURATION / 1000, ease: 'none' });
-      } else {
-        gsap.set(fill, { width: i < idx ? '100%' : '0%' });
-      }
-    });
-  }
-
-  /* Estado inicial */
-  gsap.set(imgLayers, { opacity: 0 });
-  texts.forEach((t) => {
-    gsap.set(t, { clipPath: 'inset(100% 0% 0% 0%)', y: 40 });
-    const c = t.querySelector('.txt__card');
-    if (c) gsap.set(c, { x: -80 });
-  });
-
-  showSlide(0);
-  _slideshowTimer = setInterval(() => showSlide((cur + 1) % imgLayers.length), DURATION);
+  buildMasterTimeline();
 }
 
 /* ── Animação: abre os blinds de uma layer ───────────────────── */
@@ -287,7 +215,7 @@ function buildMasterTimeline() {
       trigger:           '.stage',
       start:             'top top',
       end:               'bottom bottom',
-      scrub:             2.5,
+      scrub:             isTouch ? 0.5 : 2.5,
       anticipatePin:     1,
       invalidateOnRefresh: true,
     },
@@ -327,19 +255,12 @@ function initProgressBar() {
 
 /* ── Inicialização ───────────────────────────────────────────── */
 updateLayout();
-if (isTouch) {
-  runMobileSlideshow();
-} else {
-  initProgressBar();
-}
+initProgressBar();
 
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    updateLayout();
-    if (isTouch) runMobileSlideshow();
-  }, 250);
+  resizeTimer = setTimeout(updateLayout, 250);
 });
 
 /* ── Mobile Menu ─────────────────────────────────────────────── */

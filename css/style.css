@@ -1650,8 +1650,8 @@ a:hover { color: var(--white); }
   html  { font-size: 14px; }
   :root { --pad: 5vw; }
 
-  /* Stage: no mobile vira slideshow fixo (altura = 1 viewport) */
-  .stage { height: 100vh; }
+  /* Stage: mobile usa scroll-driven com 250vh (espaço para 3 cenas) */
+  .stage { height: 250vh; }
 
   /* ── Frame ───────────────────────────────────── */
   .frame__nav { display: none; }
