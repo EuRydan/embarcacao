@@ -229,7 +229,7 @@ a:hover { color: var(--white); }
 
 /* ─── Stage (sticky scroll area) ────────────── */
 .stage {
-  height: 500vh;
+  height: 600vh;
   position: relative;
 }
 
@@ -1650,8 +1650,8 @@ a:hover { color: var(--white); }
   html  { font-size: 14px; }
   :root { --pad: 5vw; }
 
-  /* Stage: mobile usa scroll-driven com 250vh (espaço para 3 cenas) */
-  .stage { height: 250vh; }
+  /* Stage: 300vh dá espaço para buffer de vídeo + 3 cenas */
+  .stage { height: 300vh; }
 
   /* ── Frame ───────────────────────────────────── */
   .frame__nav { display: none; }

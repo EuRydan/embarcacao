@@ -221,6 +221,9 @@ function buildMasterTimeline() {
     },
   });
 
+  // Buffer inicial: vídeo fica visível ~1 viewport de scroll antes das imagens
+  master.to({}, { duration: 3 });
+
   // Para cada layer: abre blinds → texto entra → texto sai
   blindsSets.forEach((blinds, i) => {
     master.add(openBlinds(blinds));
