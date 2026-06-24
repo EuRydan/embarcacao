@@ -997,14 +997,15 @@ a:hover { color: var(--white); }
 .seminovos-results {
   width: 100%;
   max-width: 1400px;
+  margin-top: 1rem;
 }
 
 .yacht-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1px;
-  background: rgba(200, 169, 110, 0.12);
-  border: 1px solid rgba(200, 169, 110, 0.12);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.8rem;
+  background: none;
+  border: none;
 }
 
 .seminovos-count {
@@ -1018,13 +1019,17 @@ a:hover { color: var(--white); }
 }
 
 .yacht-card {
-  background: var(--ocean);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
   display: flex;
   flex-direction: column;
-  transition: background 0.25s ease;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.yacht-card:hover { background: rgba(10, 22, 40, 0.9); }
+.yacht-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(200,169,110,0.3);
+}
 
 .yacht-card__img-wrap {
   overflow: hidden;
@@ -1043,7 +1048,7 @@ a:hover { color: var(--white); }
 .yacht-card:hover .yacht-card__img { transform: scale(1.04); }
 
 .yacht-card__body {
-  padding: 2rem 2rem 2.4rem;
+  padding: 2.2rem 2.2rem 2.8rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -1770,9 +1775,14 @@ a:hover { color: var(--white); }
   letter-spacing: 0.05em;
 }
 
+/* ─── Tablet: 3 colunas ─────────────────────── */
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+  .yacht-grid { grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+}
+
 /* ─── Mobile wide: 2-col yacht grid ─────────── */
 @media screen and (min-width: 460px) and (max-width: 768px) {
-  .yacht-grid { grid-template-columns: 1fr 1fr; }
+  .yacht-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
   .yacht-card__title { font-size: 1.2rem; }
 }
 
@@ -1853,7 +1863,7 @@ a:hover { color: var(--white); }
   .filter-group--ref  { min-width: 100%; max-width: 100%; flex: none; }
   .filter-search      { width: 100%; height: 48px; }
   /* 2 colunas em telas >= 460px, 1 coluna em telas menores */
-  .yacht-grid         { grid-template-columns: 1fr; gap: 0; }
+  .yacht-grid         { grid-template-columns: 1fr; gap: 1rem; }
   .yacht-card__img-wrap { aspect-ratio: 16/9; }
   .yacht-card__body   { padding: 1.2rem 1.2rem 1.6rem; gap: 0.5rem; }
   .yacht-card__title  { font-size: 1.3rem; }
