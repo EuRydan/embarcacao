@@ -314,20 +314,86 @@ a:hover { color: var(--white); }
   max-width: 36ch;
 }
 
-/* ─── Stage: mobile estático (sem animação GSAP) ── */
+/* ─── Stage: mobile — carrossel por swipe ─────── */
 @media (hover: none) {
-  /* SVG layers ficam pretas sem animação — esconder, só o vídeo aparece */
-  .layer        { display: none; }
-  /* Esconder slides 2 e 3 e a barra de progresso */
-  .txt--2, .txt--3 { display: none; }
+  .stage        { height: 100vh; position: relative; }
+  .layer,
+  .video-bg,
+  .txt,
   .progress-bar { display: none; }
-  /* Resetar estado inicial do GSAP no primeiro texto para ele aparecer */
-  .txt--1 {
+
+  /* ── Carrossel ── */
+  .mobile-carousel {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .mobile-carousel::-webkit-scrollbar { display: none; }
+
+  .mobile-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mobile-slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(150deg, rgba(6,14,28,.75) 0%, rgba(6,14,28,.22) 70%);
+  }
+
+  .mobile-slide .txt {
+    display: flex;
+    position: absolute;
+    inset: 0;
+    padding: var(--pad);
+    padding-bottom: 14vh;
+    align-items: flex-end;
     clip-path: none !important;
     transform: none !important;
     opacity: 1 !important;
   }
-  .txt--1 .txt__card { transform: none !important; }
+
+  .mobile-slide .txt__card {
+    transform: none !important;
+    max-width: calc(100vw - calc(2 * var(--pad)));
+  }
+
+  /* ── Dots ── */
+  .mobile-carousel__dots {
+    position: absolute;
+    bottom: 2.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: .8rem;
+    z-index: 11;
+  }
+
+  .mobile-carousel__dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.3);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background .3s ease, transform .3s ease;
+  }
+
+  .mobile-carousel__dot.is-active {
+    background: var(--gold);
+    transform: scale(1.5);
+  }
 }
 
 /* ─── Progress Bar ───────────────────────────── */

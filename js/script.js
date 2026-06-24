@@ -257,8 +257,63 @@ function initProgressBar() {
   });
 }
 
+/* ── Carrossel mobile ────────────────────────────────────────── */
+function initMobileCarousel() {
+  const stage = document.querySelector('.stage');
+  if (!stage) return;
+
+  const images = ['img/2.webp', 'img/1.webp', 'img/3.webp'];
+  const txts   = stage.querySelectorAll('.txt');
+
+  const carousel = document.createElement('div');
+  carousel.className = 'mobile-carousel';
+  carousel.setAttribute('data-lenis-prevent', '');
+
+  images.forEach((src, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'mobile-slide';
+    slide.style.backgroundImage = `url(${src})`;
+    if (txts[i]) slide.appendChild(txts[i].cloneNode(true));
+    carousel.appendChild(slide);
+  });
+
+  /* dots */
+  const dotsWrap = document.createElement('div');
+  dotsWrap.className = 'mobile-carousel__dots';
+  images.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'mobile-carousel__dot' + (i === 0 ? ' is-active' : '');
+    btn.setAttribute('aria-label', `Slide ${i + 1}`);
+    dotsWrap.appendChild(btn);
+  });
+  carousel.appendChild(dotsWrap);
+
+  /* atualiza dot ativo ao rolar */
+  let snapTimer;
+  carousel.addEventListener('scroll', () => {
+    clearTimeout(snapTimer);
+    snapTimer = setTimeout(() => {
+      const idx = Math.round(carousel.scrollLeft / carousel.clientWidth);
+      dotsWrap.querySelectorAll('.mobile-carousel__dot').forEach((d, i) =>
+        d.classList.toggle('is-active', i === idx)
+      );
+    }, 60);
+  }, { passive: true });
+
+  /* click no dot navega */
+  dotsWrap.querySelectorAll('.mobile-carousel__dot').forEach((dot, i) => {
+    dot.addEventListener('click', () =>
+      carousel.scrollTo({ left: i * carousel.clientWidth, behavior: 'smooth' })
+    );
+  });
+
+  stage.appendChild(carousel);
+}
+
 /* ── Inicialização ───────────────────────────────────────────── */
-if (!isTouch) {
+if (isTouch) {
+  initMobileCarousel();
+} else {
   updateLayout();
   initProgressBar();
 }
