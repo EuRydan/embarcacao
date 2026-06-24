@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Escritórios Licenciados | Yacht Collection</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: var(--navy); color: var(--white); }
+
+    /* ── Topbar ── */
+    .yd-topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      height: 68px;
+      display: flex; align-items: center; gap: 2rem; padding: 0 5vw;
+      background: rgba(6,14,28,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--white-10);
+    }
+    .yd-topbar__logo { height: clamp(22px,2.2vw,34px); width: auto; }
+    .yd-topbar__back {
+      margin-left: auto;
+      font-family: var(--font-sans); font-size: .8rem;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      display: flex; align-items: center; gap: .5rem;
+      transition: opacity .2s;
+    }
+    .yd-topbar__back:hover { opacity: .7; }
+
+    /* ── Page ── */
+    .esc-page {
+      padding-top: 68px;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    /* ── Hero ── */
+    .esc-hero {
+      padding: 9vh 5vw 6vh;
+      border-bottom: 1px solid var(--white-10);
+    }
+    .esc-hero__eyebrow {
+      font-family: var(--font-sans);
+      font-size: .75rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.6rem;
+    }
+    .esc-hero__title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 5vw, 6rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .esc-hero__title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* ── Grid de escritórios ── */
+    .esc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      border-left: 1px solid var(--white-10);
+    }
+
+    .esc-card {
+      padding: 4vw 3vw;
+      border-right: 1px solid var(--white-10);
+      border-bottom: 1px solid var(--white-10);
+      transition: background-color 0.35s ease;
+    }
+
+    .esc-card:hover {
+      background-color: rgba(200, 169, 110, 0.07);
+    }
+
+    .esc-card__city {
+      font-family: var(--font-sans);
+      font-size: .7rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+
+    .esc-card__name {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 2vw, 2.6rem);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+
+    .esc-card__info {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+    }
+
+    .esc-card__row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-family: var(--font-sans);
+      font-size: clamp(1rem, 0.85vw, 1.3rem);
+      font-weight: 300;
+      color: var(--white-60);
+      line-height: 1.6;
+    }
+
+    .esc-card__row-label {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      min-width: 60px;
+      padding-top: .15em;
+    }
+
+    .esc-card__row a {
+      color: var(--white-60);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .esc-card__row a:hover { color: var(--gold); }
+
+    /* ── Contato geral ── */
+    .esc-footer-cta {
+      padding: 6vw 5vw;
+      border-top: 1px solid var(--white-10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .esc-footer-cta__text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 2.5vw, 3rem);
+      font-weight: 300;
+      color: var(--white);
+    }
+
+    .esc-footer-cta__text em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .esc-footer-cta__contact {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+      align-items: flex-end;
+    }
+
+    .esc-footer-cta__phone {
+      font-family: var(--font-sans);
+      font-size: clamp(1.2rem, 1.5vw, 1.8rem);
+      font-weight: 300;
+      color: var(--white);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .esc-footer-cta__phone:hover { color: var(--gold); }
+
+    .esc-footer-cta__label {
+      font-family: var(--font-sans);
+      font-size: .65rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    @media (max-width: 768px) {
+      .esc-grid { grid-template-columns: 1fr; }
+      .esc-footer-cta { flex-direction: column; align-items: flex-start; }
+      .esc-footer-cta__contact { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="yd-topbar">
+    <a href="index.html">
+      <img class="yd-topbar__logo" src="img/logo.png" alt="Yacht Collection">
+    </a>
+    <a class="yd-topbar__back" href="index.html#a-empresa">← Voltar</a>
+  </header>
+
+  <main class="esc-page">
+
+    <div class="esc-hero">
+      <p class="esc-hero__eyebrow">Yacht Collection</p>
+      <h1 class="esc-hero__title">Escritórios<br><em>Licenciados</em></h1>
+    </div>
+
+    <div class="esc-grid">
+
+      <div class="esc-card">
+        <p class="esc-card__city">Rio de Janeiro — RJ</p>
+        <h2 class="esc-card__name">Escritório<br>Rio de Janeiro</h2>
+        <div class="esc-card__info">
+          <div class="esc-card__row">
+            <span class="esc-card__row-label">Tel.</span>
+            <a href="tel:+552135125000">(21) 3512.5000</a>
+          </div>
+          <div class="esc-card__row">
+            <span class="esc-card__row-label">WhatsApp</span>
+            <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="esc-card">
+        <p class="esc-card__city">São Paulo — SP</p>
+        <h2 class="esc-card__name">Escritório<br>São Paulo</h2>
+        <div class="esc-card__info">
+          <div class="esc-card__row">
+            <span class="esc-card__row-label">Tel.</span>
+            <a href="tel:+551135145500">(11) 3514.5500</a>
+          </div>
+          <div class="esc-card__row">
+            <span class="esc-card__row-label">WhatsApp</span>
+            <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="esc-card">
+        <p class="esc-card__city">Angra dos Reis — RJ</p>
+        <h2 class="esc-card__name">Escritório<br>Angra dos Reis</h2>
+        <div class="esc-card__info">
+          <div class="esc-card__row">
+            <span class="esc-card__row-label">Tel.</span>
+            <a href="tel:+552135125000">(21) 3512.5000</a>
+          </div>
+          <div class="esc-card__row">
+            <span class="esc-card__row-label">WhatsApp</span>
+            <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="esc-card">
+        <p class="esc-card__city">Fortaleza — CE</p>
+        <h2 class="esc-card__name">Escritório<br>Fortaleza</h2>
+        <div class="esc-card__info">
+          <div class="esc-card__row">
+            <span class="esc-card__row-label">Tel.</span>
+            <a href="tel:+552135125000">(21) 3512.5000</a>
+          </div>
+          <div class="esc-card__row">
+            <span class="esc-card__row-label">WhatsApp</span>
+            <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="esc-footer-cta">
+      <p class="esc-footer-cta__text">Fale com um de<br>nossos <em>especialistas</em></p>
+      <div class="esc-footer-cta__contact">
+        <span class="esc-footer-cta__label">Central de Atendimento</span>
+        <a class="esc-footer-cta__phone" href="tel:+5521993890921">+55 (21) 99389-0921</a>
+        <a class="esc-footer-cta__phone" href="https://wa.me/5521993890921" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

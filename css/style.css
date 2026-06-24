@@ -490,6 +490,11 @@ a:hover { color: var(--white); }
   padding: 4vw 3vw;
   border-bottom: 1px solid rgba(10, 22, 40, 0.1);
   border-right: 1px solid rgba(10, 22, 40, 0.1);
+  transition: background-color 0.35s ease;
+}
+
+.pilar:hover {
+  background-color: rgba(200, 169, 110, 0.10);
 }
 
 .pilar__title {
@@ -509,10 +514,63 @@ a:hover { color: var(--white); }
   color: rgba(10, 22, 40, 0.65);
 }
 
+/* ─── Conheça a Yacht Collection ─────────────── */
+.empresa-conheca {
+  padding: 6vw var(--pad) 5vw;
+  border-top: 1px solid rgba(10, 22, 40, 0.1);
+}
+
+.empresa-conheca__label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(10, 22, 40, 0.45);
+  margin-bottom: 2.4rem;
+}
+
+.empresa-conheca__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.conheca-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(10, 22, 40, 0.12);
+  font-family: var(--font-sans);
+  font-size: clamp(1.3rem, 1.4vw, 1.8rem);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy);
+  text-decoration: none;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.conheca-link:hover {
+  color: var(--gold);
+  padding-left: 0.6rem;
+}
+
+.conheca-link__arrow {
+  font-size: 1.2em;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.conheca-link:hover .conheca-link__arrow {
+  transform: translateX(6px);
+}
+
 @media screen and (max-width: 768px) {
   .empresa-body { grid-template-columns: 1fr; }
   .empresa-intro { border-right: none; border-bottom: 1px solid rgba(10,22,40,0.1); }
   .empresa-pillars { grid-template-columns: 1fr; }
+  .empresa-conheca { padding: 10vw var(--pad) 8vw; }
 }
 
 .frame__logo {
