@@ -1254,12 +1254,14 @@ a:hover { color: var(--white); }
 .cc-cta {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: .7rem;
-  letter-spacing: 0.18em;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--navy) !important;
-  background: var(--gold);
-  padding: .6em 1.6em;
+  background: #C8A96E;
+  padding: 0.9em 1.8em;
+  width: fit-content;
+  margin-top: 0.4rem;
   transition: background 0.25s ease;
 }
 .cc-cta:hover { background: #d9bc87; }
