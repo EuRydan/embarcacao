@@ -227,15 +227,12 @@ a:hover { color: var(--white); }
   z-index: 0;
 }
 
-/* ─── Stage (sticky scroll area) ────────────── */
+/* ─── Stage (scroll area — pin gerenciado pelo GSAP) ─ */
 .stage {
-  height: 600vh;
   position: relative;
 }
 
 .layers {
-  position: sticky;
-  top: 0;
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -1649,9 +1646,6 @@ a:hover { color: var(--white); }
   /* Base */
   html  { font-size: 14px; }
   :root { --pad: 5vw; }
-
-  /* Stage: 300vh dá espaço para buffer de vídeo + 3 cenas */
-  .stage { height: 300vh; }
 
   /* ── Frame ───────────────────────────────────── */
   .frame__nav { display: none; }

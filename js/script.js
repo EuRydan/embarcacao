@@ -214,7 +214,8 @@ function buildMasterTimeline() {
     scrollTrigger: {
       trigger:           '.stage',
       start:             'top top',
-      end:               'bottom bottom',
+      end:               () => `+=${window.innerHeight * (isTouch ? 2.5 : 5)}`,
+      pin:               true,
       scrub:             isTouch ? 0.5 : 2.5,
       anticipatePin:     1,
       invalidateOnRefresh: true,
@@ -242,7 +243,7 @@ function initProgressBar() {
     id:      'progress',
     trigger: '.stage',
     start:   'top top',
-    end:     'bottom bottom',
+    end:     () => `+=${window.innerHeight * (isTouch ? 2.5 : 5)}`,
     scrub:   0.3,
     onUpdate: (self) => {
       const p     = self.progress;
