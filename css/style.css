@@ -494,7 +494,7 @@ a:hover { color: var(--white); }
 }
 
 .pilar:hover {
-  background-color: rgba(200, 169, 110, 0.10);
+  background-color: #C8A96E;
 }
 
 .pilar__title {
@@ -504,6 +504,11 @@ a:hover { color: var(--white); }
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 1.6rem;
+  transition: color 0.35s ease;
+}
+
+.pilar:hover .pilar__title {
+  color: var(--navy);
 }
 
 .pilar__text {
@@ -512,6 +517,11 @@ a:hover { color: var(--white); }
   font-weight: 300;
   line-height: 1.8;
   color: rgba(10, 22, 40, 0.65);
+  transition: color 0.35s ease;
+}
+
+.pilar:hover .pilar__text {
+  color: rgba(10, 22, 40, 0.85);
 }
 
 /* ─── Conheça a Yacht Collection ─────────────── */
