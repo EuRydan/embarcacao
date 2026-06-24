@@ -63,19 +63,39 @@
     /* ── Grid de escritórios ── */
     .esc-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       border-left: 1px solid var(--white-10);
     }
 
     .esc-card {
-      padding: 4vw 3vw;
       border-right: 1px solid var(--white-10);
       border-bottom: 1px solid var(--white-10);
+      overflow: hidden;
       transition: background-color 0.35s ease;
     }
 
-    .esc-card:hover {
-      background-color: rgba(200, 169, 110, 0.07);
+    .esc-card:hover { background-color: rgba(200, 169, 110, 0.06); }
+
+    .esc-card__img-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+
+    .esc-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .esc-card:hover .esc-card__img {
+      transform: scale(1.04);
+    }
+
+    .esc-card__body {
+      padding: 3.5vw 3vw;
     }
 
     .esc-card__city {
@@ -84,7 +104,7 @@
       letter-spacing: .3em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.2rem;
     }
 
     .esc-card__name {
@@ -120,6 +140,7 @@
       color: var(--gold);
       min-width: 60px;
       padding-top: .15em;
+      flex-shrink: 0;
     }
 
     .esc-card__row a {
@@ -180,6 +201,7 @@
 
     @media (max-width: 768px) {
       .esc-grid { grid-template-columns: 1fr; }
+      .esc-card__body { padding: 6vw 5vw; }
       .esc-footer-cta { flex-direction: column; align-items: flex-start; }
       .esc-footer-cta__contact { align-items: flex-start; }
     }
@@ -204,61 +226,81 @@
     <div class="esc-grid">
 
       <div class="esc-card">
-        <p class="esc-card__city">Rio de Janeiro — RJ</p>
-        <h2 class="esc-card__name">Escritório<br>Rio de Janeiro</h2>
-        <div class="esc-card__info">
-          <div class="esc-card__row">
-            <span class="esc-card__row-label">Tel.</span>
-            <a href="tel:+552135125000">(21) 3512.5000</a>
-          </div>
-          <div class="esc-card__row">
-            <span class="esc-card__row-label">WhatsApp</span>
-            <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+        <div class="esc-card__img-wrap">
+          <img class="esc-card__img" src="img/escritorio-1.png" alt="Escritório Rio de Janeiro">
+        </div>
+        <div class="esc-card__body">
+          <p class="esc-card__city">Rio de Janeiro — RJ</p>
+          <h2 class="esc-card__name">Escritório<br>Rio de Janeiro</h2>
+          <div class="esc-card__info">
+            <div class="esc-card__row">
+              <span class="esc-card__row-label">Tel.</span>
+              <a href="tel:+552135125000">(21) 3512.5000</a>
+            </div>
+            <div class="esc-card__row">
+              <span class="esc-card__row-label">WhatsApp</span>
+              <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="esc-card">
-        <p class="esc-card__city">São Paulo — SP</p>
-        <h2 class="esc-card__name">Escritório<br>São Paulo</h2>
-        <div class="esc-card__info">
-          <div class="esc-card__row">
-            <span class="esc-card__row-label">Tel.</span>
-            <a href="tel:+551135145500">(11) 3514.5500</a>
-          </div>
-          <div class="esc-card__row">
-            <span class="esc-card__row-label">WhatsApp</span>
-            <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+        <div class="esc-card__img-wrap">
+          <img class="esc-card__img" src="img/escritorio-2.png" alt="Escritório São Paulo">
+        </div>
+        <div class="esc-card__body">
+          <p class="esc-card__city">São Paulo — SP</p>
+          <h2 class="esc-card__name">Escritório<br>São Paulo</h2>
+          <div class="esc-card__info">
+            <div class="esc-card__row">
+              <span class="esc-card__row-label">Tel.</span>
+              <a href="tel:+551135145500">(11) 3514.5500</a>
+            </div>
+            <div class="esc-card__row">
+              <span class="esc-card__row-label">WhatsApp</span>
+              <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="esc-card">
-        <p class="esc-card__city">Angra dos Reis — RJ</p>
-        <h2 class="esc-card__name">Escritório<br>Angra dos Reis</h2>
-        <div class="esc-card__info">
-          <div class="esc-card__row">
-            <span class="esc-card__row-label">Tel.</span>
-            <a href="tel:+552135125000">(21) 3512.5000</a>
-          </div>
-          <div class="esc-card__row">
-            <span class="esc-card__row-label">WhatsApp</span>
-            <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+        <div class="esc-card__img-wrap">
+          <img class="esc-card__img" src="img/escritorio-3.jpg" alt="Escritório Angra dos Reis">
+        </div>
+        <div class="esc-card__body">
+          <p class="esc-card__city">Angra dos Reis — RJ</p>
+          <h2 class="esc-card__name">Escritório<br>Angra dos Reis</h2>
+          <div class="esc-card__info">
+            <div class="esc-card__row">
+              <span class="esc-card__row-label">Tel.</span>
+              <a href="tel:+552135125000">(21) 3512.5000</a>
+            </div>
+            <div class="esc-card__row">
+              <span class="esc-card__row-label">WhatsApp</span>
+              <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="esc-card">
-        <p class="esc-card__city">Fortaleza — CE</p>
-        <h2 class="esc-card__name">Escritório<br>Fortaleza</h2>
-        <div class="esc-card__info">
-          <div class="esc-card__row">
-            <span class="esc-card__row-label">Tel.</span>
-            <a href="tel:+552135125000">(21) 3512.5000</a>
-          </div>
-          <div class="esc-card__row">
-            <span class="esc-card__row-label">WhatsApp</span>
-            <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+        <div class="esc-card__img-wrap">
+          <img class="esc-card__img" src="img/escritorio-4.jpg" alt="Escritório Fortaleza">
+        </div>
+        <div class="esc-card__body">
+          <p class="esc-card__city">Fortaleza — CE</p>
+          <h2 class="esc-card__name">Escritório<br>Fortaleza</h2>
+          <div class="esc-card__info">
+            <div class="esc-card__row">
+              <span class="esc-card__row-label">Tel.</span>
+              <a href="tel:+552135125000">(21) 3512.5000</a>
+            </div>
+            <div class="esc-card__row">
+              <span class="esc-card__row-label">WhatsApp</span>
+              <a href="https://wa.me/5521993890921" target="_blank" rel="noopener">+55 (21) 99389-0921</a>
+            </div>
           </div>
         </div>
       </div>
