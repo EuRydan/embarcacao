@@ -314,6 +314,22 @@ a:hover { color: var(--white); }
   max-width: 36ch;
 }
 
+/* ─── Stage: mobile estático (sem animação GSAP) ── */
+@media (hover: none) {
+  /* SVG layers ficam pretas sem animação — esconder, só o vídeo aparece */
+  .layer        { display: none; }
+  /* Esconder slides 2 e 3 e a barra de progresso */
+  .txt--2, .txt--3 { display: none; }
+  .progress-bar { display: none; }
+  /* Resetar estado inicial do GSAP no primeiro texto para ele aparecer */
+  .txt--1 {
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .txt--1 .txt__card { transform: none !important; }
+}
+
 /* ─── Progress Bar ───────────────────────────── */
 .progress-bar {
   position: absolute;

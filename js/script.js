@@ -258,11 +258,14 @@ function initProgressBar() {
 }
 
 /* ── Inicialização ───────────────────────────────────────────── */
-updateLayout();
-initProgressBar();
+if (!isTouch) {
+  updateLayout();
+  initProgressBar();
+}
 
 let resizeTimer;
 window.addEventListener('resize', () => {
+  if (isTouch) return;
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(updateLayout, 250);
 });
