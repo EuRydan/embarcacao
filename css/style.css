@@ -1254,19 +1254,15 @@ a:hover { color: var(--white); }
 .cc-cta {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: .8rem;
-  letter-spacing: 0.2em;
+  font-size: .7rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--white) !important;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.45);
-  padding: .8em 2em;
-  transition: border-color 0.25s ease, color 0.25s ease;
+  color: var(--navy) !important;
+  background: var(--gold);
+  padding: .6em 1.6em;
+  transition: background 0.25s ease;
 }
-.cc-cta:hover {
-  border-color: var(--white);
-  color: var(--white) !important;
-}
+.cc-cta:hover { background: #d9bc87; }
 
 .cc-body {
   display: grid;
